@@ -45,7 +45,7 @@
 		where palbang_id=#{palbang_id}
 	</update>
 	
-	<delete id="deleteByPalbangId" parameterType="int">
+	<delete id="deleteByPid" parameterType="int">
 		delete from palbang
 		where palbang_id=#{palbang_id}
 	</delete>
@@ -122,7 +122,7 @@
 		where rnum &gt;= #{startRowNo}
 	</select>
    	
-   	<select id="selectById" parameterType="int" resultType="palbang">
+   	<select id="selectByPid" parameterType="int" resultType="palbang">
    		select palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
 		from palbang
 		where palbang_id=#{palbang_id}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.sabangpalbang.dao.PalbangDetailDao">
+	<insert id="insert" parameterType="palbang_detail">
+		<selectKey keyProperty="palbang_detailno" resultType="int" order="BEFORE">
+			select seq_palbang_detailno.nextval from dual
+		</selectKey>
+		insert into palbang_detail
+		(palbang_detailno, palbang_id, palbang_dimgoname, palbang_dimgsname, palbang_dimgtype, palbang_explain)	
+		values
+		(#{palbang_detailno}, #{palbang_id}, #{palbang_dimgoname}, #{palbang_dimgsname}, #{palbang_dimgtype}, #{palbang_explain})	
+	</insert>
+	
+	<insert id="insertPalbangDetail" parameterType="palbang_detail">
+		<selectKey keyProperty="palbang_detailno" resultType="int" order="BEFORE">
+			select seq_palbang_detailno.nextval from dual
+		</selectKey>
+		insert into palbang_detail
+		(palbang_detailno, palbang_id, palbang_dimgoname, palbang_dimgsname, palbang_dimgtype, palbang_explain)
+		values
+		(#{palbang_detailno}, #{palbang_id}, #{palbang_dimgoname}, #{palbang_dimgsname}, #{palbang_dimgtype}, #{palbang_explain})
+	</insert>
+	
+	<select id="selectAll" parameterType="int" resultType="palbang_detail">
+		select palbang_detailno, palbang_id, palbang_dimgoname, palbang_dimgsname, palbang_dimgtype, palbang_explain
+		from palbang_detail
+		where palbang_id=#{palbang_id}
+	</select>
+	
+	<update id="updatePalbangDetail" parameterType="palbang_detail">
+		update palbang_detail set
+		palbang_dimgoname=#{palbang_dimgoname}, 
+		palbang_dimgsname=#{palbang_dimgsname}, 
+		palbang_dimgtype=#{palbang_dimgtype}, 
+		palbang_explain=#{palbang_explain}
+		where palbang_detailno=#{palbang_detailno}
+	</update>
+	
+	<delete id="deleteByPalbangDetailno" parameterType="int">
+		delete from palbang_detail
+		where palbang_detailno=#{palbang_detailno}
+	</delete>
+	
+	<delete id="deletePalDetailByPalId" parameterType="int">
+		delete from palbang_detail 
+		where palbang_id=#{palbang_id}
+	</delete>
+	
+</mapper>
