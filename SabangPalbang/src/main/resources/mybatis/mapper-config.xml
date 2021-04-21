@@ -3,6 +3,7 @@
 <configuration>
    <typeAliases>  
    	  <typeAlias alias="palbang" type="com.mycompany.sabangpalbang.dto.Palbang" />
+   	  <typeAlias alias="palbang_detail" type="com.mycompany.sabangpalbang.dto.Palbang_detail" />
       <typeAlias alias="pager" type="com.mycompany.sabangpalbang.dto.Pager" />
    </typeAliases>
 </configuration>
