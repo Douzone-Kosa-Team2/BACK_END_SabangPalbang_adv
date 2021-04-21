@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.sabangpalbang.dao.PalbangDao">
+	<insert id="insertPalbang" parameterType="palbang">
+		<selectKey keyProperty="palbang_id" resultType="int" order="BEFORE">
+			select seq_palbang_id.nextval from dual
+		</selectKey>
+		insert into palbang
+		(palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype)
+		values
+		(#{palbang_id}, #{palbang_title}, #{palbang_nickname}, 0, 0, sysdate, #{palbang_imgoname}, #{palbang_imgsname}, #{palbang_imgtype})
+	</insert>
+	
+	<select id="selectAll" resultType="palbang">
+		select palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+		from palbang
+		order by palbang_id desc
+	</select>
+	
+	<!-- 메인 팔방 좋아요 수 top3 -->
+	<select id="selectTop3" resultType="palbang">
+		select rownum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype 
+		from (
+			select palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+			from palbang
+			order by palbang_likecount desc
+		)
+		where rownum &lt;= 3
+	</select>
+	
+	<update id="updatePalbang" parameterType="palbang">
+		update palbang set
+		palbang_title=#{palbang_title}, 
+		palbang_likecount=#{palbang_likecount}, 
+		palbang_viewcount=#{palbang_viewcount}, 
+		palbang_imgoname=#{palbang_imgoname}, 
+		palbang_imgsname=#{palbang_imgsname}, 
+		palbang_imgtype=#{palbang_imgtype}
+		where palbang_id=#{palbang_id}
+	</update>
+	
+	<update id="updateViewCount" parameterType="int">
+		update palbang set
+		palbang_viewcount=palbang_viewcount+1 
+		where palbang_id=#{palbang_id}
+	</update>
+	
+	<delete id="deleteByPalbangId" parameterType="int">
+		delete from palbang
+		where palbang_id=#{palbang_id}
+	</delete>
+
+   	<!-- 팔방 정렬_ 좋아요 순  -->
+   <select id="selectByLike" parameterType="pager" resultType="palbang">
+		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+		from (
+			select rownum as rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount,
+			 palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+			from (
+				select palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+				palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+				from palbang
+				order by palbang_likecount desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+   
+   	<!-- 팔방 정렬_ 조회수 순  -->
+   	<select id="selectByView" parameterType="pager" resultType="palbang">
+		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+		from (
+			select rownum as rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount,
+			 palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+			from (
+				select palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+				palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+				from palbang
+				order by palbang_viewcount desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+   	
+   	<!-- 팔방 정렬_ 등록일 순  -->
+   	<select id="selectByNew" parameterType="pager" resultType="palbang">
+		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+		from (
+			select rownum as rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount,
+			 palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+			from (
+				select palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+				palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+				from palbang
+				order by palbang_date desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+   		
+   	<!-- 팔방 정렬_ 오래된 순  -->
+   	<select id="selectByOld" parameterType="pager" resultType="palbang">
+		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+		from (
+			select rownum as rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount,
+			 palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+			from (
+				select palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
+				palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+				from palbang
+				order by palbang_date
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+   	
+   	<select id="selectById" parameterType="int" resultType="palbang">
+   		select palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+		from palbang
+		where palbang_id=#{palbang_id}
+   	</select>
+   
+   <select id="count" resultType="int">
+      	select count(*) from palbang
+   </select>
+   
+   <update id="updateLikeCountUp" parameterType="int">	
+   	  	update palbang set 
+		palbang_likecount = palbang_likecount+1
+		where palbang_id=#{palbang_id}
+   </update>
+   
+    <update id="updateLikeCountDown" parameterType="int">	
+   	  	update palbang set 
+		palbang_likecount = palbang_likecount-1
+		where palbang_id=#{palbang_id}
+   </update>
+</mapper>

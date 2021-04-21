@@ -2,7 +2,8 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
    <typeAliases>
-      <!-- <typeAlias alias="product" type="com.mycompany.sabangpalbang.dto.Product"/>
-      <typeAlias alias="pager" type="com.mycompany.wsabangpalbang.dto.Pager" /> -->
+     
+   	  <typeAlias alias="palbang" type="com.mycompany.sabangpalbang.dto.Palbang" />
+      <typeAlias alias="pager" type="com.mycompany.sabangpalbang.dto.Pager" />
    </typeAliases>
 </configuration>
