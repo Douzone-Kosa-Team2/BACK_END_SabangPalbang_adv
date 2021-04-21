@@ -26,7 +26,9 @@ public class PalbangController {
 	
 	@GetMapping("") //게시물 목록을 보여달라고 할 떼
 	  public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
+		logger.info("진입");
 	     int totalRows = palbangService.getCount();
+	     logger.info("진입2");
 	     Pager pager = new Pager(5, 5, totalRows, pageNo);
 	     List<Palbang> list = palbangService.getList(pager);
 	     Map<String, Object> map = new HashMap<>();
