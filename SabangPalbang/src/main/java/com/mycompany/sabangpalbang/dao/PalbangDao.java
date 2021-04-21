@@ -11,5 +11,7 @@ import com.mycompany.sabangpalbang.dto.Palbang;
 public interface PalbangDao {
 	public int count();
 	public List<Palbang> selectByLike(Pager pager);
+	public int deleteByPid(int palbang_id);
+	public Palbang selectByPid(int palbang_id);
 
 }
