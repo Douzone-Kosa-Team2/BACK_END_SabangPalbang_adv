@@ -20,18 +20,19 @@ import com.mycompany.sabangpalbang.service.PalbangService;
 @RequestMapping("/palbang_m")
 public class PalbangController {
 	private static final Logger logger = LoggerFactory.getLogger(PalbangController.class);
-	
-	@Autowired 
+
+	@Autowired
 	private PalbangService palbangService;
-	
-	@GetMapping("") //게시물 목록을 보여달라고 할 떼
-	  public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
-	     int totalRows = palbangService.getCount();
-	     Pager pager = new Pager(5, 5, totalRows, pageNo);
-	     List<Palbang> list = palbangService.getList(pager);
-	     Map<String, Object> map = new HashMap<>();
-	     map.put("pager", pager);
-	     map.put("palbang", list);
-	     return map;
-	  }
+
+	@GetMapping("") // 게시물 목록을 보여달라고 할 떼
+	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
+		logger.info("palbang_list");
+		int totalRows = palbangService.getCount();
+		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		List<Palbang> list = palbangService.getList(pager);
+		Map<String, Object> map = new HashMap<>();
+		map.put("pager", pager);
+		map.put("palbang", list);
+		return map;
+	}
 }
