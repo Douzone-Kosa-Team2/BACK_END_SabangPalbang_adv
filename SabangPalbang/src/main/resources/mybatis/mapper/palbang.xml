@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="euc-kr" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.sabangpalbang.dao.PalbangDao">
 	<insert id="insertPalbang" parameterType="palbang">
@@ -17,7 +17,7 @@
 		order by palbang_id desc
 	</select>
 	
-	<!-- ¸ÞÀÎ ÆÈ¹æ ÁÁ¾Æ¿ä ¼ö top3 -->
+	<!-- ë©”ì¸ íŒ”ë°© ì¢‹ì•„ìš” ìˆ˜ top3 -->
 	<select id="selectTop3" resultType="palbang">
 		select rownum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype 
 		from (
@@ -50,7 +50,7 @@
 		where palbang_id=#{palbang_id}
 	</delete>
 
-   	<!-- ÆÈ¹æ Á¤·Ä_ ÁÁ¾Æ¿ä ¼ø  -->
+   	<!-- íŒ”ë°© ì •ë ¬_ ì¢‹ì•„ìš” ìˆœ  -->
    <select id="selectByLike" parameterType="pager" resultType="palbang">
 		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
 		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
@@ -68,7 +68,7 @@
 		where rnum &gt;= #{startRowNo}
 	</select>
    
-   	<!-- ÆÈ¹æ Á¤·Ä_ Á¶È¸¼ö ¼ø  -->
+   	<!-- íŒ”ë°© ì •ë ¬_ ì¡°íšŒìˆ˜ ìˆœ  -->
    	<select id="selectByView" parameterType="pager" resultType="palbang">
 		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
 		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
@@ -86,7 +86,7 @@
 		where rnum &gt;= #{startRowNo}
 	</select>
    	
-   	<!-- ÆÈ¹æ Á¤·Ä_ µî·ÏÀÏ ¼ø  -->
+   	<!-- íŒ”ë°© ì •ë ¬_ ë“±ë¡ì¼ ìˆœ  -->
    	<select id="selectByNew" parameterType="pager" resultType="palbang">
 		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
 		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
@@ -104,7 +104,7 @@
 		where rnum &gt;= #{startRowNo}
 	</select>
    		
-   	<!-- ÆÈ¹æ Á¤·Ä_ ¿À·¡µÈ ¼ø  -->
+   	<!-- íŒ”ë°© ì •ë ¬_ ì˜¤ëž˜ëœ ìˆœ  -->
    	<select id="selectByOld" parameterType="pager" resultType="palbang">
 		select rnum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, 
 		palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype

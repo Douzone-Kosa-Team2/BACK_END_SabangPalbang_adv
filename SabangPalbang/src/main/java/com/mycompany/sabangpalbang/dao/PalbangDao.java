@@ -9,9 +9,7 @@ import com.mycompany.sabangpalbang.dto.Palbang;
 
 @Mapper
 public interface PalbangDao {
-	
 	public int count();
-
 	public List<Palbang> selectByLike(Pager pager);
 
 }
