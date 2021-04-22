@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.sabangpalbang.dao.InquiryDao">
+	<insert id="insert" parameterType="inquiry">
+		<selectKey keyProperty="inquiry_id" resultType="int"
+			order="BEFORE">
+			select seq_inquiry_id.nextval from dual
+		</selectKey>
+		insert into inquiry
+		(inquiry_id, inquiry_sabangid, inquiry_type,
+		inquiry_ansstate, inquiry_title, inquiry_writer, inquiry_date,
+		inquiry_explain, inquiry_anscontent)
+		values
+		(#{inquiry_id},
+		#{inquiry_sabangid}, #{inquiry_type},
+		#{inquiry_ansstate},
+		#{inquiry_title}, #{inquiry_writer},
+		#{inquiry_date},
+		#{inquiry_explain}, #{inquiry_anscontent})
+	</insert>
+
+	<!-- 처음 팝업창에서 문의사항 추가 -->
+	<insert id="insertInquiryFirst" parameterType="inquiry">
+		<selectKey keyProperty="inquiry_id" resultType="int"
+			order="BEFORE">
+			select seq_inquiry_id.nextval from dual
+		</selectKey>
+		insert into inquiry
+		(inquiry_id, inquiry_sabangid, inquiry_type,
+		inquiry_ansstate, inquiry_title, inquiry_writer, inquiry_date,
+		inquiry_explain)
+		values
+		(#{inquiry_id}, #{inquiry_sabangid},
+		#{inquiry_type},
+		#{inquiry_ansstate}, #{inquiry_title},
+		#{inquiry_writer},
+		sysdate, #{inquiry_explain})
+	</insert>
+
+	<select id="selectAll" resultType="inquiry">
+		select inquiry_id,
+		inquiry_sabangid, inquiry_type, inquiry_ansstate, inquiry_title,
+		inquiry_writer, inquiry_date, inquiry_explain, inquiry_anscontent
+		from
+		inquiry
+		order by inquiry_id desc
+	</select>
+
+	<select id="selectInquiryByNickname" parameterType="String"
+		resultType="inquiry">
+		select inquiry_id, inquiry_sabangid, inquiry_type,
+		inquiry_ansstate, inquiry_title, inquiry_writer, inquiry_date,
+		inquiry_explain, inquiry_anscontent
+		from inquiry
+		where
+		inquiry_writer=#{inquiry_writer}
+		order by inquiry_id desc
+	</select>
+
+	<select id="selectInquiry" parameterType="hashmap"
+		resultType="inquiry">
+		select rnum, inquiry_id, inquiry_sabangid, inquiry_type,
+		inquiry_ansstate, inquiry_title, inquiry_writer, inquiry_date,
+		inquiry_explain, inquiry_anscontent
+		from (
+		select rownum as rnum,
+		inquiry_id, inquiry_sabangid, inquiry_type,
+		inquiry_ansstate,
+		inquiry_title, inquiry_writer, inquiry_date,
+		inquiry_explain,
+		inquiry_anscontent
+		from (
+		select inquiry_id, inquiry_sabangid,
+		inquiry_type, inquiry_ansstate,
+		inquiry_title, inquiry_writer,
+		inquiry_date, inquiry_explain,
+		inquiry_anscontent
+		from inquiry
+		where
+		inquiry_sabangid=#{inquiry_sabangid}
+		order by inquiry_id desc
+		)
+		where
+		rownum &lt;= #{pager.endRowNo}
+		)
+		where rnum &gt;= #{pager.startRowNo}
+	</select>
+
+	<select id="selectNicknameInquiry" parameterType="hashmap"
+		resultType="inquiry">
+		select rnum, inquiry_id, inquiry_sabangid, inquiry_type,
+		inquiry_ansstate, inquiry_title, inquiry_writer, inquiry_date,
+		inquiry_explain, inquiry_anscontent
+		from (
+		select rownum as rnum,
+		inquiry_id, inquiry_sabangid, inquiry_type,
+		inquiry_ansstate,
+		inquiry_title, inquiry_writer, inquiry_date,
+		inquiry_explain,
+		inquiry_anscontent
+		from (
+		select inquiry_id, inquiry_sabangid,
+		inquiry_type, inquiry_ansstate,
+		inquiry_title, inquiry_writer,
+		inquiry_date, inquiry_explain,
+		inquiry_anscontent
+		from inquiry
+		where
+		inquiry_writer=#{inquiry_writer}
+		order by inquiry_id desc
+		)
+		where rownum
+		&lt;= #{pager.endRowNo}
+		)
+		where rnum &gt;= #{pager.startRowNo}
+	</select>
+
+	<update id="updateInquiryByid" parameterType="int">
+		update inquiry set
+		inquiry_sabangid=#{inquiry_sabangid},
+		inquiry_type=#{inquiry_type},
+		inquiry_ansstate=#{inquiry_ansstate},
+		inquiry_title=#{inquiry_title},
+		inquiry_writer=#{inquiry_writer},
+		inquiry_date=#{inquiry_date},
+		inquiry_explain=#{inquiry_explain},
+		inquiry_anscontent=#{inquiry_anscontent}
+		where inquiry_id=#{inquiry_id}
+	</update>
+
+	<update id="updateInquiryAnswerById" parameterType="int">
+		update
+		inquiry set
+		inquiry_ansstate=#{inquiry_ansstate},
+		inquiry_anscontent=#{inquiry_anscontent}
+		where inquiry_id=#{inquiry_id}
+	</update>
+
+	<delete id="deleteInquiryByInquiryId" parameterType="int">
+		delete from
+		inquiry
+		where inquiry_id=#{inquiry_id}
+	</delete>
+
+	<select id="count" resultType="int">
+		select count(*) from inquiry
+		where inquiry_sabangid=#{inquiry_sabangid}
+	</select>
+	
+	<select id="countNeedAnswer" resultType="int">
+		select count(*) from inquiry
+		where inquiry_sabangid=#{inquiry_sabangid} and inquiry_ansstate = '대기중'
+	</select>
+	
+
+	<select id="mycount" resultType="int" parameterType="string">
+		select
+		count(*) from inquiry
+		where inquiry_writer=#{inquiry_writer}
+	</select>
+
+	<!-- id로 찾기 -->
+	<select id="selectInquiryById" resultType="inquiry"
+		parameterType="int">
+		select inquiry_id,
+		inquiry_sabangid, inquiry_type,
+		inquiry_ansstate, inquiry_title,
+		inquiry_writer, inquiry_date,
+		inquiry_explain, inquiry_anscontent
+		from
+		inquiry
+		where
+		inquiry_id=#{inquiry_id}
+	</select>
+
+</mapper>

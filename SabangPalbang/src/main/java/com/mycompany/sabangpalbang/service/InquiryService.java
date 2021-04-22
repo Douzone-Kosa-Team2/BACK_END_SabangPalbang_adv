@@ -27,6 +27,11 @@ public class InquiryService {
 		List<Inquiry> inquiryList = inquiryDao.selectInquiry(map);
 		return inquiryList;
 	}
+
+	public int getNoAnsCount(int sid) {
+		int row = inquiryDao.countNeedAnswer(sid);
+		return row;
+	}
 	
 	//"내가 쓴 문의글 로그인한 계정의 별명으로 문의글 중에 같은 별명인 문의글을 받으려는 문"
 //	public List<Inquiry> getInquiryList(Pager pager, String inquiry_writer) {
