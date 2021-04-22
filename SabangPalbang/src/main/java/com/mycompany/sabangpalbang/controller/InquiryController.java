@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,7 +33,8 @@ public class InquiryController {
 	@Autowired
 	private SabangService sabangService;
 	
-	@GetMapping("") // 사방 목록을 보여달라고 할 떼 
+	// 사방 목록
+	@GetMapping("") 
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
 		int totalRows = sabangService.getCount();
 		Pager pager = new Pager(5, 5, totalRows, pageNo);
@@ -52,7 +54,8 @@ public class InquiryController {
 		return map;
 	}
 	
-	@GetMapping("/{sid}") // 사방의 문의 목록을 보여달라고 할 떼
+	// 사방에 대한 문의 목록
+	@GetMapping("/{sid}") 
 	public Map<String, Object> inquirylist(@RequestParam(defaultValue = "1") int pageNo, @PathVariable int sid) {
 		logger.info("controller - inquiry_list");
 		
@@ -74,7 +77,8 @@ public class InquiryController {
 		
 	    Inquiry inquiry = inquiryService.getInquiry(inquiry_id);
 	    
-	    logger.info("" + inquiry);
+	    logger.info("" + inquiry.getInquiry_explain());
+	    logger.info("" + inquiry.getInquiry_id());
 	    
 		return inquiry;
 	}
@@ -90,6 +94,13 @@ public class InquiryController {
 		return inquiry.getInquiry_id();	
 	}
 	
+	// 문의 삭제 
+	@DeleteMapping("/{inquiry_id}")
+	public void delete(@PathVariable int inquiry_id) {
+		logger.info("controller - 문의내용 삭제 ");
+		inquiryService.deleteInquiry(inquiry_id);
+
+	}
 	
 
 }

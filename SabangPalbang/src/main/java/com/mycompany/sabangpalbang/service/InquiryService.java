@@ -43,4 +43,12 @@ public class InquiryService {
 		int row = inquiryDao.updateInquiryAnswerById(inquiry_content, inquiry_id);
 		return row;
 	}
+
+	// 문의 삭제 
+	public void deleteInquiry(int inquiry_id) {
+		inquiryDao.deleteInquiryByInquiryId(inquiry_id);
+	}
+	
+	
+	
 }

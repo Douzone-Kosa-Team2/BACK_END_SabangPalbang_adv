@@ -9,18 +9,14 @@ import com.mycompany.sabangpalbang.dto.Inquiry;
 @Mapper
 public interface InquiryDao {
 	
-	public int insert(Inquiry inquiry);
 	public List<Inquiry> selectAll();
 	public Inquiry selectInquiryByNickname(String nickname);
-	public int updateInquiryByid(int inquiry_id);
 	public int updateInquiryAnswerById(@Param(value="inquiry_anscontent")String inquiry_anscontent, 
 									@Param(value="inquiry_id")int inquiry_id);
 	public int deleteInquiryByInquiryId(int inquiry_id);
 	public List<Inquiry> selectInquiry(HashMap<String, Object> map);
 	public int count(int sid);
-	public int mycount(String inquiry_writer);
 	public List<Inquiry> selectNicknameInquiry(HashMap<String, Object> map);
-	public int insertInquiryFirst(Inquiry inquiry);
 	public Inquiry selectInquiryById(int inquiry_id);
 	public int countNeedAnswer(int sid);
 	
