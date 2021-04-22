@@ -31,7 +31,7 @@ public class PalbangController {
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
 		logger.info("palbang_list");
 		int totalRows = palbangService.getCount();
-		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		Pager pager = new Pager(6, 5, totalRows, pageNo);
 		List<Palbang> palbangs = palbangService.getList(pager);
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
