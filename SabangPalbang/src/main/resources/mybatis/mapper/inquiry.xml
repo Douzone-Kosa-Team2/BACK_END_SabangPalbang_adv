@@ -129,10 +129,9 @@
 		where inquiry_id=#{inquiry_id}
 	</update>
 
-	<update id="updateInquiryAnswerById" parameterType="int">
-		update
-		inquiry set
-		inquiry_ansstate=#{inquiry_ansstate},
+	<update id="updateInquiryAnswerById">
+		update inquiry set
+		inquiry_ansstate='답변완료',
 		inquiry_anscontent=#{inquiry_anscontent}
 		where inquiry_id=#{inquiry_id}
 	</update>

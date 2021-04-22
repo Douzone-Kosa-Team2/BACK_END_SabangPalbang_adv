@@ -33,34 +33,14 @@ public class InquiryService {
 		return row;
 	}
 	
-	//"내가 쓴 문의글 로그인한 계정의 별명으로 문의글 중에 같은 별명인 문의글을 받으려는 문"
-//	public List<Inquiry> getInquiryList(Pager pager, String inquiry_writer) {
-//		HashMap<String, Object> map = new HashMap<>();
-//		map.put("pager", pager);
-//		map.put("inquiry_writer", inquiry_writer);
-//
-//		List<Inquiry> inquiryListNickname = inquiryDao.selectNicknameInquiry(map);
-//		return inquiryListNickname;
-//	}
-//	
-//	public Inquiry getInquiryWriter(String nickname) {
-//		Inquiry Ilist = inquiryDao.selectInquiryByNickname(nickname);
-//		return Ilist;
-//	}
-//	public int getTotalMyRows(String inquiry_writer) {
-//		int row = inquiryDao.mycount(inquiry_writer);
-//		return row;
-//	}
-//
-//	// 팝업에서 문의글 작성
-//	public void addInquiry(Inquiry inquiry) {
-//		inquiryDao.insertInquiryFirst(inquiry);
-//		
-//	}
-//
-//	public Inquiry getInquiry(int inquiry_id) {
-//		Inquiry inquiry = inquiryDao.selectInquiryById(inquiry_id);
-//		return inquiry;
-//	}
-//	
+	public Inquiry getInquiry(int inquiry_id) {
+		Inquiry inquiry = inquiryDao.selectInquiryById(inquiry_id);
+		return inquiry;
+	}
+	
+	// 관리자가 문의 답변하기 
+	public int updateAns(String inquiry_content, int inquiry_id) {
+		int row = inquiryDao.updateInquiryAnswerById(inquiry_content, inquiry_id);
+		return row;
+	}
 }
