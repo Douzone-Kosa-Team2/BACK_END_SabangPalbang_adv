@@ -20,6 +20,8 @@ public interface OrderMainDao {
 	public int deleteByOid(int order_id);
 	public Sabang selectById(int sabangID);
 	public int update(OrderMain order);
+	public List<OrderMain> selectOrderByDateUpList(Pager pager);
+	public List<OrderMain> selectOrderByDateDownList(Pager pager);
 	
 	
 }

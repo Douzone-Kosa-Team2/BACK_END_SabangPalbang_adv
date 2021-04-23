@@ -15,6 +15,35 @@
 			where rownum &lt;= #{endRowNo}
 		)
 		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<!-- "오래된 순"으로 정렬 -->
+	<select id="selectOrderByDateUpList" parameterType="pager" resultType="ordermain">		
+		select rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+		from (
+			select rownum as rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+			from (
+				select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+				from ordermain
+				order by order_date asc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select> 
+	 <!-- "최신 순"으로 정렬 -->
+	 <select id="selectOrderByDateDownList" parameterType="pager" resultType="ordermain">		
+		select rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+		from (
+			select rownum as rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+			from (
+				select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+				from ordermain
+				order by order_date desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
 	</select> 
 	
 	
@@ -37,6 +66,7 @@
 	<!-- 수정 중 -->
 	<update id="update" parameterType="ordermain">
 		update ordermain set
+		order_zipcode=#{order_zipcode},
 		order_roadaddress=#{order_roadaddress},
 		order_detailaddress=#{order_detailaddress},
 		order_state=#{order_state},

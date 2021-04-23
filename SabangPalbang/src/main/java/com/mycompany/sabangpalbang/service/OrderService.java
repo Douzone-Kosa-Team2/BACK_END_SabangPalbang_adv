@@ -76,6 +76,14 @@ public class OrderService {
 		return orderMainDao.update(order);
 		
 	}
+
+	public List<OrderMain> getDateUpList(Pager pager) {
+		return orderMainDao.selectOrderByDateUpList(pager);
+	}
+
+	public List<OrderMain> getDateDownList(Pager pager) {
+		return orderMainDao.selectOrderByDateDownList(pager);
+	}
 	
 
 	

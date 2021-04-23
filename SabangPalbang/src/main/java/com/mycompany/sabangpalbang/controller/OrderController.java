@@ -41,9 +41,15 @@ public class OrderController {
 		Pager pager = new Pager(6, 5, totalRows, pageNo);
 		List<OrderMain> orders = orderService.getList(pager);
 		
+		List<OrderMain> dateUpList = orderService.getDateUpList(pager);
+		List<OrderMain> dateDownList = orderService.getDateDownList(pager);
+		
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
 		map.put("orders", orders);
+		map.put("dateUpList", dateUpList);
+		map.put("dateDownList", dateDownList);
 		return map;
 	}
 	
@@ -78,7 +84,11 @@ public class OrderController {
 	
 	@PutMapping("") //주문 업데이트
 	  public OrderMain update(OrderMain order) {
+		logger.info(order.getOrder_zipcode());
+		logger.info(order.getOrder_roadaddress());
+		logger.info(order.getOrder_detailaddress());
 		orderService.update(order);
+		
 	    return order;
 	  }
 	
