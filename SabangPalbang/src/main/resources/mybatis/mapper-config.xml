@@ -6,6 +6,7 @@
    	  <typeAlias alias="product" type="com.mycompany.sabangpalbang.dto.Product" />
    	  <typeAlias alias="palbang" type="com.mycompany.sabangpalbang.dto.Palbang" />
    	  <typeAlias alias="palbang_detail" type="com.mycompany.sabangpalbang.dto.Palbang_detail" />
+   	  <typeAlias alias="inquiry" type="com.mycompany.sabangpalbang.dto.Inquiry" />
       <typeAlias alias="pager" type="com.mycompany.sabangpalbang.dto.Pager" />
    </typeAliases>
 </configuration>
