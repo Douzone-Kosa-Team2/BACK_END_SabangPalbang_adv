@@ -2,6 +2,7 @@ package com.mycompany.sabangpalbang.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class SabangController {
 
 	@GetMapping("") // 사방 목록을 보여달라고 할 떼
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
-		logger.info("palbang_list");
+		logger.info("sabang_list");
 		int totalRows = sabangService.getCount();
 		Pager pager = new Pager(6, 5, totalRows, pageNo);
 		List<Sabang> sabangs = sabangService.getList(pager);
@@ -81,7 +82,7 @@ public class SabangController {
 			sabang.setSabang_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			sabang.setSabang_imgtype(mf.getContentType());
 			try {
-				File file = new File("C:/Users/ant94/git/FRONT_END_SabangPalbang_adv/resources/images/sabang_post/"
+				File file = new File("C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/"
 						+ sabang.getSabang_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {
@@ -113,7 +114,7 @@ public class SabangController {
 			sabang.setSabang_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			sabang.setSabang_imgtype(mf.getContentType());
 			try {
-				File file = new File("C:/Users/ant94/git/FRONT_END_SabangPalbang_adv/resources/images/sabang_post/"
+				File file = new File("C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/"
 						+ sabang.getSabang_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {
@@ -135,7 +136,7 @@ public class SabangController {
 				return;
 			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
 			String sattachsname = sabang.getSabang_imgsname();
-			String sattachspath = "C:/Users/ant94/git/FRONT_END_SabangPalbang_adv/resources/images/sabang_post/" + sattachsname;
+			String sattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/" + sattachsname;
 			String sattachtype = sabang.getSabang_imgtype();
 
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
@@ -175,7 +176,7 @@ public class SabangController {
 			product.setProduct_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			product.setProduct_imgtype(mf.getContentType());
 			try {
-				File file = new File("C:/Users/ant94/git/FRONT_END_SabangPalbang_adv/resources/images/sabang_detail/"
+				File file = new File("C:/Users/ant94/git/SabangPalbang_upload/images/sabang_detail/"
 						+ product.getProduct_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {
@@ -183,10 +184,46 @@ public class SabangController {
 			}
 		}
 		sabangService.insertProduct(product);
-		// json은 문자열이기 때문에 파일 이름이 들어갈수없다. 그래서 없애버려라
 		product.setPattach(null);
+		//int sabang_id = product.getSabang_id();
+		
+		logger.info(""+product.getSabang_id());
 		return product;
 	}
+	
+//	@PostMapping("/detail2")
+//	public void test(Product product) throws Exception {
+//		logger.info(product.getProduct_name());
+//		logger.info(""+product.getSabang_id());
+//		logger.info(""+product.getProduct_price());
+//		logger.info(""+product.getProduct_buycount());
+//		logger.info(""+product.getProduct_explain1());
+//		logger.info(""+product.getProduct_explain2());
+//		logger.info(""+product.getPattach());
+//		if (product.getPattach() != null && !product.getPattach().isEmpty()) {
+//			MultipartFile mf = product.getPattach();
+//			product.setProduct_imgoname(mf.getOriginalFilename());
+//			product.setProduct_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
+//			product.setProduct_imgtype(mf.getContentType());
+//			try {
+//				File file = new File("C:/Users/ant94/git/upload/" + product.getProduct_imgsname());
+////				C:/Users/ant94/Documents/JavaProject/upload2/
+//				mf.transferTo(file);
+//				/*ileOutputStream fos = new FileOutputStream(file);
+//				InputStream is = mf.getInputStream();
+//				byte[] data = new byte[1024];
+//				int readBytes = -1;
+//				while((readBytes=is.read(data)) != -1) {
+//					fos.write(data, 0, readBytes);
+//				}
+//				fos.flush();
+//				fos.close();
+//				is.close();*/
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}	
 
 	// 상품 수정
 
@@ -207,7 +244,7 @@ public class SabangController {
 			product.setProduct_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			product.setProduct_imgtype(mf.getContentType());
 			try {
-				File file = new File("C:/Users/ant94/git/FRONT_END_SabangPalbang_adv/resources/images/sabang_detail/"
+				File file = new File("C:/Users/ant94/git/SabangPalbang_upload/images/sabang_detail/"
 						+ product.getProduct_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {
@@ -215,13 +252,17 @@ public class SabangController {
 			}
 		}
 		sabangService.updateProduct(product);
-		// json은 문자열이기 때문에 파일 이름이 들어갈수없다. 그래서 없애버려라
 		product.setPattach(null);
 		return product;
 	}
 	// 상품 삭제
 	@DeleteMapping("/detail/{product_id}")
-	public void deleteProduct(@PathVariable int product_id) {
+	public Product deleteProduct(@PathVariable int product_id) {
+		Product product = sabangService.getSabangId(product_id);
+		int sabang_id = product.getSabang_id();
+		logger.info(""+sabang_id);
 		sabangService.deleteProduct(product_id);
+		
+		return product;
 	}
 }

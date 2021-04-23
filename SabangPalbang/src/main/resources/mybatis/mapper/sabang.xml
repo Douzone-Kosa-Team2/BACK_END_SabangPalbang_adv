@@ -30,17 +30,25 @@
 	<!-- 사방 업데이트 관리자 -->
 	<update id="update"  parameterType="sabang">
 		update sabang set
-		
-		sabang_name=#{sabang_name}, 
-		sabang_price=#{sabang_price},
-		sabang_saleprice=#{sabang_saleprice}, 
-		sabang_buycount=#{sabang_buycount}, 
-		sabang_viewcount=#{sabang_viewcount}, 
-		sabang_imgoname=#{sabang_imgoname},
-		sabang_imgsname=#{sabang_imgsname}, 
-		sabang_imgtype=#{sabang_imgtype}, 
-		sabang_state=#{sabang_state}
-		
+		<if test="sabang_imgoname==null">
+			sabang_name=#{sabang_name}, 
+			sabang_price=#{sabang_price},
+			sabang_saleprice=#{sabang_saleprice}, 
+			sabang_buycount=#{sabang_buycount}, 
+			sabang_viewcount=#{sabang_viewcount}, 
+			sabang_state=#{sabang_state}
+		</if>
+		<if test="sabang_imgoname!=null">
+			sabang_name=#{sabang_name}, 
+			sabang_price=#{sabang_price},
+			sabang_saleprice=#{sabang_saleprice}, 
+			sabang_buycount=#{sabang_buycount}, 
+			sabang_viewcount=#{sabang_viewcount}, 
+			sabang_imgoname=#{sabang_imgoname},
+			sabang_imgsname=#{sabang_imgsname}, 
+			sabang_imgtype=#{sabang_imgtype}, 
+			sabang_state=#{sabang_state}
+		</if>
 		where sabang_id=#{sabang_id}
 	</update>
 	

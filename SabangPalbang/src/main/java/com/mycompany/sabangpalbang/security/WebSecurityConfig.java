@@ -65,17 +65,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			//요청 경로 권한 설정
 			//ROLE_ 를 넣는상황 hasAuthority
 			//.antMatchers(HttpMethod.POST,"/boards").hasAuthority("ROLE_USER")
-			
+			.antMatchers("/sabang_m").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/palbang_m").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/order_m").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/inquiry_m").hasAuthority("ROLE_ADMIN")
 			//hasAuthority는 한개 속성 넣고
 			//hasAnyRole 은 여러개 넣을 수 있다.
-			
-			.antMatchers(HttpMethod.POST,"/boards").hasAnyRole("USER")
-			.antMatchers(HttpMethod.PUT,"/boards").hasAnyRole("USER")
-			.antMatchers(HttpMethod.DELETE,"/boards/*").hasAnyRole("USER")
-		
-			.antMatchers(HttpMethod.POST,"/products").hasAnyRole("ADMIN")
-			.antMatchers(HttpMethod.PUT,"/products").hasAnyRole("ADMIN")
-			.antMatchers(HttpMethod.DELETE,"/products/*").hasAnyRole("ADMIN")
 			
 			//밑에 하위 경로까지 ** 그 이외의 모든 경로 허가 
 			.antMatchers("/**").permitAll();	
@@ -87,9 +82,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		auth.jdbcAuthentication()
         	.dataSource(dataSource)
         	//인증
-        	.usersByUsernameQuery("select userid as username, userpassword as password, userenabled as enabled from users where userid=?")
+        	.usersByUsernameQuery("select member_email as username, member_pw as password, member_enable as enabled from member where member_email=?")
         	//권한 참조
-        	.authoritiesByUsernameQuery("select userid as username, userauthority as authority from users where userid=?")
+        	.authoritiesByUsernameQuery("select member_email as username, member_authority as authority from member where member_email=?")
         	.passwordEncoder(new BCryptPasswordEncoder());
 	}
 	
@@ -115,7 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	//ROLE_ 를 넣어야됨 
 	public RoleHierarchyImpl roleHierarchyImpl() {
 		RoleHierarchyImpl roleHierarchyImpl = new RoleHierarchyImpl();
-		roleHierarchyImpl.setHierarchy("ROLE_ADMIN > ROLE_MANAGER > ROLE_USER");
+		roleHierarchyImpl.setHierarchy("ROLE_ADMIN > ROLE_MEMBER");
 		
 		return roleHierarchyImpl;
 	}
