@@ -84,7 +84,50 @@ public class OrderService {
 	public List<OrderMain> getDateDownList(Pager pager) {
 		return orderMainDao.selectOrderByDateDownList(pager);
 	}
+
+	public List<OrderMain> getWaitForPayList(Pager pager) {
+		return orderMainDao.selectOrderByWaitForPayList(pager);
+	}
+
+	public List<OrderMain> getPaySuccessList(Pager pager) {
+		return orderMainDao.selectOrderByPaySuccessList(pager);
+	}
 	
+	public List<OrderMain> getPostingList(Pager postingpager) {
+		return orderMainDao.selectOrderByPostingList(postingpager);
+	}
+	
+	public List<OrderMain> getPostReadyList(Pager postReadypager) {
+		return orderMainDao.selectOrderByPostReadyList(postReadypager);
+	}
+	
+	public List<OrderMain> getPostSuccessList(Pager postSuccesspager) {
+		return orderMainDao.selectOrderByPostSuccessList(postSuccesspager);
+	}
+
+	
+	public int getWaitForPayCount() {
+		return orderMainDao.waitForPaycount();
+	}
+
+	public int getPaySuccessCount() {
+		return orderMainDao.paySuccesscount();
+	}
+
+	public int getPostReadyCount() {
+		return orderMainDao.postReadycount();
+	}
+
+	public int getPostingCount() {
+		return orderMainDao.postingcount();
+	}
+
+	public int getPostSuccessCount() {
+		return orderMainDao.postSuccesscount();
+	}
+
+	
+
 
 	
 	

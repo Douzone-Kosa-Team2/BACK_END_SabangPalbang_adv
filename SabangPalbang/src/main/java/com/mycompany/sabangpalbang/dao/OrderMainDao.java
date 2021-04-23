@@ -22,6 +22,16 @@ public interface OrderMainDao {
 	public int update(OrderMain order);
 	public List<OrderMain> selectOrderByDateUpList(Pager pager);
 	public List<OrderMain> selectOrderByDateDownList(Pager pager);
+	public List<OrderMain> selectOrderByWaitForPayList(Pager pager);
+	public List<OrderMain> selectOrderByPaySuccessList(Pager pager);
+	public int waitForPaycount();
+	public int paySuccesscount();
+	public int postReadycount();
+	public List<OrderMain> selectOrderByPostReadyList(Pager postReadypager);
+	public int postingcount();
+	public List<OrderMain> selectOrderByPostingList(Pager postingpager);
+	public int postSuccesscount();
+	public List<OrderMain> selectOrderByPostSuccessList(Pager postSuccesspager);
 	
 	
 }
