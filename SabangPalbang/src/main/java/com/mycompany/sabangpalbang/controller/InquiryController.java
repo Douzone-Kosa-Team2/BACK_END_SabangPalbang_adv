@@ -3,7 +3,6 @@ package com.mycompany.sabangpalbang.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.mycompany.sabangpalbang.dto.Inquiry;
 import com.mycompany.sabangpalbang.dto.Pager;
 import com.mycompany.sabangpalbang.dto.Sabang;
@@ -25,7 +23,6 @@ import com.mycompany.sabangpalbang.service.SabangService;
 @RestController
 @RequestMapping("inquiry_m")
 public class InquiryController {
-	
 	private static final Logger logger = LoggerFactory.getLogger(PalbangController.class);
 	
 	@Autowired
@@ -56,41 +53,41 @@ public class InquiryController {
 	
 	// 사방에 대한 문의 목록
 	@GetMapping("/{sid}") 
-	public Map<String, Object> inquirylist(@RequestParam(defaultValue = "1") int pageNo, @PathVariable int sid) {
+	public Map<String, Object> inquirylist(@PathVariable int sid,
+										   @RequestParam(defaultValue = "1") int pageNo,
+										   String ansstate) {
 		logger.info("controller - inquiry_list");
-		
+
 		int totalRows = inquiryService.getCount(sid);
-		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		Pager pager = new Pager(6, 5, totalRows, pageNo);
 		
-		List<Inquiry> inquirylist = inquiryService.getList(pager, sid);
+		/* 점체답변이면 널이고, 아니면 그 값을 넣어줘야함 */
+		if(ansstate.equals("전체답변")) {
+			ansstate = null;
+		}
+		logger.info("-------------null, 대기중, 답변완료 셋중 하나: " + ansstate);
+		
+		
+		List<Inquiry> inquirylist = inquiryService.getList(pager, sid, ansstate);
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
 		map.put("inquirylist", inquirylist);
-		
 		return map;
 	}
 	
 	// 문의 내용 읽기 
 	@GetMapping("/inquiry/{inquiry_id}") 
 	public Inquiry inquiry(@PathVariable int inquiry_id) {
-		logger.info("controller - 문의내용 읽기");
-		
+		logger.info("controller - 문의내용 읽기");	
 	    Inquiry inquiry = inquiryService.getInquiry(inquiry_id);
-	    
-	    logger.info("" + inquiry.getInquiry_explain());
-	    logger.info("" + inquiry.getInquiry_id());
-	    
 		return inquiry;
 	}
-	
 	
 	// 문의 답변 남기기 
 	@PutMapping("")
 	public int answer(@RequestBody Inquiry inquiry) {
 		logger.info("controller - 문의 답변 남기기 ");
-		
-		int row = inquiryService.updateAns(inquiry.getInquiry_anscontent(), inquiry.getInquiry_id());
-		 // update 작업을 성공하면 
+		inquiryService.updateAns(inquiry.getInquiry_anscontent(), inquiry.getInquiry_id());
 		return inquiry.getInquiry_id();	
 	}
 	
@@ -99,8 +96,6 @@ public class InquiryController {
 	public void delete(@PathVariable int inquiry_id) {
 		logger.info("controller - 문의내용 삭제 ");
 		inquiryService.deleteInquiry(inquiry_id);
-
 	}
-	
 
 }

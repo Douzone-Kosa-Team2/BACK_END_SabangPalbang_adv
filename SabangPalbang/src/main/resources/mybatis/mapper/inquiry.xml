@@ -43,6 +43,9 @@
 		from inquiry
 		where
 		inquiry_sabangid=#{inquiry_sabangid}
+		<if test="inquiry_ansstate != null">
+			and inquiry_ansstate=#{inquiry_ansstate}
+		</if>
 		order by inquiry_id desc
 		)
 		where

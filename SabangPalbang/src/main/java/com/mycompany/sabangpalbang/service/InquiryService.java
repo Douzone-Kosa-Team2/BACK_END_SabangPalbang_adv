@@ -19,11 +19,13 @@ public class InquiryService {
 		return row;
 	}
 	
-	public List<Inquiry> getList(Pager pager, int sid) {
+	public List<Inquiry> getList(Pager pager, int sid, String ansstate){
+		System.out.println("ansstate: " + ansstate);
+		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
 		map.put("inquiry_sabangid", sid);
-
+		map.put("inquiry_ansstate", ansstate);
 		List<Inquiry> inquiryList = inquiryDao.selectInquiry(map);
 		return inquiryList;
 	}
