@@ -12,4 +12,204 @@
 		sabang_id=#{sabang_id}
 	</select>
 
+	<insert id="insert" parameterType="sabang">
+		<selectKey keyProperty="sabang_id" resultType="int"
+			order="BEFORE">
+			select seq_sabang_id.nextval from dual
+		</selectKey>
+		insert into sabang
+		(sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount, sabang_imgoname,
+		sabang_imgsname, sabang_imgtype, sabang_state)
+		values
+		(#{sabang_id},
+		#{sabang_name}, #{sabang_price}, #{sabang_saleprice},
+		#{sabang_buycount}, #{sabang_viewcount}, #{sabang_imgoname},
+		#{sabang_imgsname}, #{sabang_imgtype}, #{sabang_state})
+	</insert>
+	<!-- 사방 업데이트 관리자 -->
+	<update id="update"  parameterType="sabang">
+		update sabang set
+		
+		sabang_name=#{sabang_name}, 
+		sabang_price=#{sabang_price},
+		sabang_saleprice=#{sabang_saleprice}, 
+		sabang_buycount=#{sabang_buycount}, 
+		sabang_viewcount=#{sabang_viewcount}, 
+		sabang_imgoname=#{sabang_imgoname},
+		sabang_imgsname=#{sabang_imgsname}, 
+		sabang_imgtype=#{sabang_imgtype}, 
+		sabang_state=#{sabang_state}
+		
+		where sabang_id=#{sabang_id}
+	</update>
+	
+	<!-- 사방 아이디에 따른 패키지 정보 가져오기 -->
+	<select id="selectBySid" parameterType="int"
+		resultType="sabang">
+		select sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from sabang
+		where
+		sabang_id=#{sabang_id}
+	</select>
+
+	<!-- 사방 정렬_판매율 순 (default)  -->
+	<select id="selectByBuy" parameterType="pager"
+		resultType="sabang">
+		select rnum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from (
+			select rownum as rnum, sabang_id, sabang_name, sabang_price,
+			sabang_saleprice, sabang_buycount, sabang_viewcount,
+			sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+			from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+				from sabang
+				order by sabang_buycount desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<!-- 사방 정렬_낮은 가격순-->
+	<select id="selectByLow" parameterType="pager"
+		resultType="sabang">
+			select rnum, sabang_id, sabang_name, sabang_price,
+			sabang_saleprice, sabang_buycount, sabang_viewcount,
+			sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+			from (
+				select rownum as rnum, sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+				from (
+					select sabang_id, sabang_name, sabang_price,
+					sabang_saleprice, sabang_buycount, sabang_viewcount,
+					sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+					from sabang
+					order by sabang_saleprice 
+				)
+				where rownum &lt;= #{endRowNo}
+			)
+			where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<!-- 사방 정렬_높은 가격 순  -->
+	<select id="selectByHigh" parameterType="pager"
+		resultType="sabang">
+		select rnum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from (
+			select rownum as rnum, sabang_id, sabang_name, sabang_price,
+			sabang_saleprice, sabang_buycount, sabang_viewcount,
+			sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+			from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+				from sabang
+				order by sabang_saleprice desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<!-- 사방 정렬_조회수  -->
+	<select id="selectByView" parameterType="pager"
+		resultType="sabang">
+		select rnum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from (
+			select rownum as rnum, sabang_id, sabang_name, sabang_price,
+			sabang_saleprice, sabang_buycount, sabang_viewcount,
+			sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+			from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+				from sabang
+				order by sabang_viewcount desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<select id="count" resultType="int">
+      select count(*) from sabang
+    </select>
+	
+	<!-- 메인 사방 판매율 top3 -->
+	<select id="selectTop3" resultType="sabang">
+		select rownum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+				from sabang
+				order by sabang_buycount desc
+			)
+		where rownum &lt;= 3
+		
+	</select>
+	
+	<!-- 사방 조회수 업데이트 -->
+	<update id="updateViewCount" parameterType="int">
+		update sabang set
+		sabang_viewcount=sabang_viewcount+1 
+		where sabang_id=#{sabang_id}
+	</update>
+	
+	<update id="updateBuyCount"  parameterType="int">
+		update sabang set
+		sabang_buycount=sabang_buycount+1 
+		where sabang_id=#{sabang_id}
+	</update>
+	
+	<!-- 예산에 맞는 6개 추천 아이템 출력 -->
+		<select id="selectByPrice" resultType="sabang" parameterType="int">
+		select rownum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+				from sabang
+				where sabang_saleprice &lt;= #{sabang_saleprice}
+				order by sabang_buycount desc
+			)
+		where rownum &lt;= 6	
+	</select>
+	
+
+	<update id="updateBySabang" parameterType="sabang">
+		update sabang set
+		sabang_name=#{sabang_name},
+		sabang_price=#{sabang_price},
+		sabang_saleprice=#{sabang_saleprice},
+		sabang_imgoname=#{sabang_imgoname},
+		sabang_imgsname=#{sabang_imgsname},
+		sabang_imgtype=#{sabang_imgtype},
+		sabang_state=#{sabang_state}
+		where sabang_id=#{sabang_id}
+	</update>
+
+
+	<delete id="deleteBySid" parameterType="int">
+		delete from sabang
+		where sabang_id=#{sabang_id}
+	</delete>
+	
+
 </mapper>

@@ -11,4 +11,63 @@
 	</select>	
 	
 	
+
+	<insert id="insertProduct" parameterType="product">
+		<selectKey keyProperty="product_id" resultType="int" order="BEFORE">
+			select seq_product_id.nextval from dual
+		</selectKey>
+		insert into product
+		(product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname, product_imgsname, product_imgtype, product_explain1, product_explain2)
+		values
+		(#{product_id}, #{product_name}, #{sabang_id}, #{product_price}, #{product_buycount}, #{product_imgoname}, #{product_imgsname}, #{product_imgtype}, #{product_explain1}, #{product_explain2})
+	</insert>
+	
+	 <select id="selectByProduct" parameterType="int" resultType="product">
+		select product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
+			   product_imgsname, product_imgtype, product_explain1, product_explain2
+		from product
+		where product_id=#{product_id}
+	</select>	
+	
+	<update id="updateProduct" parameterType="product">
+		update product set
+			product_name=#{product_name},
+			product_price=#{product_price},
+			product_imgoname=#{product_imgoname},
+			product_imgsname=#{product_imgsname},
+			product_imgtype=#{product_imgtype},
+			product_explain1=#{product_explain1},
+			product_explain2=#{product_explain2}
+		where product_id=#{product_id}
+	</update>	
+	<!-- 상품은 한 패키지에만 종속하기 때문에 수정시에는 이름, 패키지 id, 조회수는 바뀔일이 없어서 안줌 -->
+	
+	<update id="updateBuyCount" parameterType="int">
+		update product set
+			product_buycount=product_buycount+1
+		where product_id=#{product_id}
+	</update>
+	
+	
+	<delete id="deleteProduct" parameterType="int">
+		delete from product
+		where product_id=#{product_id}
+	</delete>
+	
+	<!-- 패키지 안의 모든 상품 출력 -->
+	<select id="selectAll" parameterType="int" resultType="product">
+		select product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
+			   product_imgsname, product_imgtype, product_explain1, product_explain2
+		from product
+		where sabang_id=#{sabang_id}	   
+	</select>
+	
+	<!-- 장바구니에 넣기 위한 사방 값 찾기 -->
+	<select id="selectCartByProductId" parameterType="int" resultType="product">
+		select product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
+			   product_imgsname, product_imgtype, product_explain1, product_explain2
+		from product
+		where product_id=#{product_id}	   
+	</select>
+	
 </mapper>

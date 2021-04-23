@@ -1,5 +1,7 @@
 package com.mycompany.sabangpalbang.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Sabang {
 	private int sabang_id;
 	private String sabang_name;
@@ -11,7 +13,17 @@ public class Sabang {
 	private String sabang_imgsname;
 	private String sabang_imgtype;
 	private String sabang_state;
+	private int totalInquiryNum; // 총 문의 개수 
+	private int noAnsInquiryNum; // 미답변 문의 개수  
 	
+	private MultipartFile sattach;
+	
+	public MultipartFile getSattach() {
+		return sattach;
+	}
+	public void setSattach(MultipartFile sattach) {
+		this.sattach = sattach;
+	}
 	public int getSabang_id() {
 		return sabang_id;
 	}
@@ -72,4 +84,18 @@ public class Sabang {
 	public void setSabang_state(String sabang_state) {
 		this.sabang_state = sabang_state;
 	}
+	public int getTotalInquiryNum() {
+		return totalInquiryNum;
+	}
+	public void setTotalInquiryNum(int totalInquiryNum) {
+		this.totalInquiryNum = totalInquiryNum;
+	}
+	public int getNoAnsInquiryNum() {
+		return noAnsInquiryNum;
+	}
+	public void setNoAnsInquiryNum(int noAnsInquiryNum) {
+		this.noAnsInquiryNum = noAnsInquiryNum;
+	}
+	
+	
 }
