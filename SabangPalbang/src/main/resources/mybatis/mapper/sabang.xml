@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.sabangpalbang.dao.SabangDao">
+	
+	<select id="selectById" parameterType="int"
+		resultType="sabang">
+		select sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from sabang
+		where
+		sabang_id=#{sabang_id}
+	</select>
+
+</mapper>

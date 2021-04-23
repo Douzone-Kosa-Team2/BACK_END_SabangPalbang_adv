@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.sabangpalbang.dao.ProductDao">
+	
+	
+	 <select id="selectAllProduct" parameterType="int" resultType="product">
+		select product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
+			   product_imgsname, product_imgtype, product_explain1, product_explain2
+		from product
+		where product_id=#{product_id}
+	</select>	
+	
+	
+</mapper>

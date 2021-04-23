@@ -4,6 +4,11 @@
    <typeAliases>  
    	  <typeAlias alias="palbang" type="com.mycompany.sabangpalbang.dto.Palbang" />
    	  <typeAlias alias="palbang_detail" type="com.mycompany.sabangpalbang.dto.Palbang_detail" />
-      <typeAlias alias="pager" type="com.mycompany.sabangpalbang.dto.Pager" />
+      <typeAlias alias="pager" type="com.mycompany.sabangpalbang.dto.Pager"/>
+      <typeAlias alias="order_detail" type="com.mycompany.sabangpalbang.dto.Order_detail"/>
+	  <typeAlias alias="ordermain" type="com.mycompany.sabangpalbang.dto.OrderMain"/>
+	  <typeAlias alias="member" type="com.mycompany.sabangpalbang.dto.Member"/>
+	  <typeAlias alias="sabang" type="com.mycompany.sabangpalbang.dto.Sabang"/>
+	  <typeAlias alias="product" type="com.mycompany.sabangpalbang.dto.Product"/>
    </typeAliases>
 </configuration>
