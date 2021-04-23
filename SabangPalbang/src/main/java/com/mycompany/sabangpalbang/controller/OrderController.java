@@ -40,16 +40,46 @@ public class OrderController {
 		int totalRows = orderService.getCount();
 		Pager pager = new Pager(6, 5, totalRows, pageNo);
 		List<OrderMain> orders = orderService.getList(pager);
+		List<OrderMain> dateUpList = orderService.getDateUpList(pager); //오래된 순 
+		List<OrderMain> dateDownList = orderService.getDateDownList(pager); //최신 순
 		
-		List<OrderMain> dateUpList = orderService.getDateUpList(pager);
-		List<OrderMain> dateDownList = orderService.getDateDownList(pager);
+		int waitForPayRows = orderService.getWaitForPayCount();//결제대기중
+		Pager waitForPaypager = new Pager(6, 5, waitForPayRows, pageNo);
+		List<OrderMain> waitForPayList = orderService.getWaitForPayList(waitForPaypager);
 		
+		int paySuccessRows = orderService.getPaySuccessCount();//결제완료
+		Pager paySuccesspager = new Pager(6, 5, paySuccessRows, pageNo);
+		List<OrderMain> paySuccessList = orderService.getPaySuccessList(paySuccesspager);
+		
+		int postReadyRows = orderService.getPostReadyCount();//배송준비중
+		Pager postReadypager = new Pager(6, 5, postReadyRows, pageNo);
+		List<OrderMain> postReadyList = orderService.getPostReadyList(postReadypager);
+		
+		int postingRows = orderService.getPostingCount();//배송중
+		Pager postingpager = new Pager(6, 5, postingRows, pageNo);
+		List<OrderMain> postingList = orderService.getPostingList(postingpager);
+		
+		int postSuccessRows = orderService.getPostSuccessCount();//배송완료
+		Pager postSuccesspager = new Pager(6, 5, postSuccessRows, pageNo);
+		List<OrderMain> postSuccessList = orderService.getPostSuccessList(postSuccesspager);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
 		map.put("orders", orders);
+		map.put("waitForPaypager", waitForPaypager);
+		map.put("paySuccesspager", paySuccesspager);
+		map.put("postReadypager", postReadypager);
+		map.put("postingpager", postingpager);
+		map.put("postSuccesspager", postSuccesspager);
+		
 		map.put("dateUpList", dateUpList);
 		map.put("dateDownList", dateDownList);
+		map.put("waitForPayList", waitForPayList);
+		map.put("paySuccessList", paySuccessList);
+		map.put("postReadyList", postReadyList);
+		map.put("postingList", postingList);
+		map.put("postSuccessList", postSuccessList);
+		
 		return map;
 	}
 	

@@ -45,11 +45,113 @@
 		)
 		where rnum &gt;= #{startRowNo}
 	</select> 
+	<!-- 결제 대기 중 리스트 -->
+	<select id="selectOrderByWaitForPayList" parameterType="pager" resultType="ordermain">		
+		select rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+		from (
+			select rownum as rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+			from (
+				select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+				from ordermain
+				where order_state='결제대기중'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	<!-- 결제 완료 리스트 -->
+	<select id="selectOrderByPaySuccessList" parameterType="pager" resultType="ordermain">		
+		select rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+		from (
+			select rownum as rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+			from (
+				select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+				from ordermain
+				where order_state='결제완료'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	<!-- 배송준비중 리스트 -->
+	<select id="selectOrderByPostReadyList" parameterType="pager" resultType="ordermain">		
+		select rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+		from (
+			select rownum as rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+			from (
+				select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+				from ordermain
+				where order_state='배송준비중'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	<!-- 배송중 리스트 -->
+	<select id="selectOrderByPostingList" parameterType="pager" resultType="ordermain">		
+		select rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+		from (
+			select rownum as rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+			from (
+				select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+				from ordermain
+				where order_state='배송중'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<!-- 배송완료 리스트 -->
+	<select id="selectOrderByPostSuccessList" parameterType="pager" resultType="ordermain">		
+		select rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+		from (
+			select rownum as rnum, order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+			from (
+				select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	
+				from ordermain
+				where order_state='배송완료'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
 	
 	
     <select id="countView" resultType="int">
       	select count(*) 
       	from ordermain 
+    </select>
+    
+    <select id="waitForPaycount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_state='결제대기중'
+    </select>
+    
+    <select id="paySuccesscount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_state='결제완료'
+    </select>
+    
+    <select id="postReadycount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_state='배송준비중'
+    </select>
+    
+    <select id="postingcount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_state='배송중'
+    </select>
+    
+    <select id="postSuccesscount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_state='배송완료'
     </select>
 	
 	<select id="selectByOid" parameterType="int" resultType="ordermain">
