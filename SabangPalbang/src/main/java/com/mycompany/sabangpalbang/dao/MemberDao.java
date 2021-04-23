@@ -1,9 +1,12 @@
 package com.mycompany.sabangpalbang.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.sabangpalbang.dto.Member;
+import com.mycompany.sabangpalbang.dto.Pager;
 
 @Mapper
 public interface MemberDao {
@@ -26,4 +29,7 @@ public interface MemberDao {
 	public int selectNicknameCheck(String member_nickname);
 	public int selectEmailCheck(String member_email);
 	public Member selectByMember(int member_id);
+	public int count();
+	public List<Member> selectMember(Pager pager);
+	public int deleteMember(int member_id);
 }
