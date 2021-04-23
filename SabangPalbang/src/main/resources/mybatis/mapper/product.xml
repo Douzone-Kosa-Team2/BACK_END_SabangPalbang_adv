@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="euc-kr" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.sabangpalbang.dao.ProductDao">
-	<insert id="insertByProduct" parameterType="product">
+	<insert id="insertProduct" parameterType="product">
 		<selectKey keyProperty="product_id" resultType="int" order="BEFORE">
 			select seq_product_id.nextval from dual
 		</selectKey>
@@ -18,8 +18,9 @@
 		where product_id=#{product_id}
 	</select>	
 	
-	<update id="updateByProduct" parameterType="product">
+	<update id="updateProduct" parameterType="product">
 		update product set
+			product_name=#{product_name},
 			product_price=#{product_price},
 			product_imgoname=#{product_imgoname},
 			product_imgsname=#{product_imgsname},
@@ -27,7 +28,8 @@
 			product_explain1=#{product_explain1},
 			product_explain2=#{product_explain2}
 		where product_id=#{product_id}
-	</update>	<!-- »óÇ°Àº ÇÑ ÆÐÅ°Áö¿¡¸¸ Á¾¼ÓÇÏ±â ¶§¹®¿¡ ¼öÁ¤½Ã¿¡´Â ÀÌ¸§, ÆÐÅ°Áö id, Á¶È¸¼ö´Â ¹Ù²ðÀÏÀÌ ¾ø¾î¼­ ¾ÈÁÜ -->
+	</update>	
+	<!-- ìƒí’ˆì€ í•œ íŒ¨í‚¤ì§€ì—ë§Œ ì¢…ì†í•˜ê¸° ë•Œë¬¸ì— ìˆ˜ì •ì‹œì—ëŠ” ì´ë¦„, íŒ¨í‚¤ì§€ id, ì¡°íšŒìˆ˜ëŠ” ë°”ë€”ì¼ì´ ì—†ì–´ì„œ ì•ˆì¤Œ -->
 	
 	<update id="updateBuyCount" parameterType="int">
 		update product set
@@ -36,12 +38,12 @@
 	</update>
 	
 	
-	<delete id="deleteByProduct" parameterType="int">
+	<delete id="deleteProduct" parameterType="int">
 		delete from product
 		where product_id=#{product_id}
 	</delete>
 	
-	<!-- ÆÐÅ°Áö ¾ÈÀÇ ¸ðµç »óÇ° Ãâ·Â -->
+	<!-- íŒ¨í‚¤ì§€ ì•ˆì˜ ëª¨ë“  ìƒí’ˆ ì¶œë ¥ -->
 	<select id="selectAll" parameterType="int" resultType="product">
 		select product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
 			   product_imgsname, product_imgtype, product_explain1, product_explain2
@@ -49,7 +51,7 @@
 		where sabang_id=#{sabang_id}	   
 	</select>
 	
-	<!-- Àå¹Ù±¸´Ï¿¡ ³Ö±â À§ÇÑ »ç¹æ °ª Ã£±â -->
+	<!-- ìž¥ë°”êµ¬ë‹ˆì— ë„£ê¸° ìœ„í•œ ì‚¬ë°© ê°’ ì°¾ê¸° -->
 	<select id="selectCartByProductId" parameterType="int" resultType="product">
 		select product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
 			   product_imgsname, product_imgtype, product_explain1, product_explain2

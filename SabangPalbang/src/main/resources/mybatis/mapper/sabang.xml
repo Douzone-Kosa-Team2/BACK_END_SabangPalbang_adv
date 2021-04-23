@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="euc-kr" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.sabangpalbang.dao.SabangDao">
-	<insert id="insertBySabang" parameterType="sabang">
+	<insert id="insert" parameterType="sabang">
 		<selectKey keyProperty="sabang_id" resultType="int"
 			order="BEFORE">
 			select seq_sabang_id.nextval from dual
@@ -16,8 +16,24 @@
 		#{sabang_buycount}, #{sabang_viewcount}, #{sabang_imgoname},
 		#{sabang_imgsname}, #{sabang_imgtype}, #{sabang_state})
 	</insert>
+	<!-- ì‚¬ë°© ì—…ë°ì´íŠ¸ ê´€ë¦¬ìž -->
+	<update id="update"  parameterType="sabang">
+		update sabang set
+		
+		sabang_name=#{sabang_name}, 
+		sabang_price=#{sabang_price},
+		sabang_saleprice=#{sabang_saleprice}, 
+		sabang_buycount=#{sabang_buycount}, 
+		sabang_viewcount=#{sabang_viewcount}, 
+		sabang_imgoname=#{sabang_imgoname},
+		sabang_imgsname=#{sabang_imgsname}, 
+		sabang_imgtype=#{sabang_imgtype}, 
+		sabang_state=#{sabang_state}
+		
+		where sabang_id=#{sabang_id}
+	</update>
 	
-	<!-- »ç¹æ ¾ÆÀÌµð¿¡ µû¸¥ ÆÐÅ°Áö Á¤º¸ °¡Á®¿À±â -->
+	<!-- ì‚¬ë°© ì•„ì´ë””ì— ë”°ë¥¸ íŒ¨í‚¤ì§€ ì •ë³´ ê°€ì ¸ì˜¤ê¸° -->
 	<select id="selectBySid" parameterType="int"
 		resultType="sabang">
 		select sabang_id, sabang_name, sabang_price,
@@ -28,7 +44,7 @@
 		sabang_id=#{sabang_id}
 	</select>
 
-	<!-- »ç¹æ Á¤·Ä_ÆÇ¸ÅÀ² ¼ø (default)  -->
+	<!-- ì‚¬ë°© ì •ë ¬_íŒë§¤ìœ¨ ìˆœ (default)  -->
 	<select id="selectByBuy" parameterType="pager"
 		resultType="sabang">
 		select rnum, sabang_id, sabang_name, sabang_price,
@@ -50,7 +66,7 @@
 		where rnum &gt;= #{startRowNo}
 	</select>
 	
-	<!-- »ç¹æ Á¤·Ä_³·Àº °¡°Ý¼ø-->
+	<!-- ì‚¬ë°© ì •ë ¬_ë‚®ì€ ê°€ê²©ìˆœ-->
 	<select id="selectByLow" parameterType="pager"
 		resultType="sabang">
 			select rnum, sabang_id, sabang_name, sabang_price,
@@ -72,7 +88,7 @@
 			where rnum &gt;= #{startRowNo}
 	</select>
 	
-	<!-- »ç¹æ Á¤·Ä_³ôÀº °¡°Ý ¼ø  -->
+	<!-- ì‚¬ë°© ì •ë ¬_ë†’ì€ ê°€ê²© ìˆœ  -->
 	<select id="selectByHigh" parameterType="pager"
 		resultType="sabang">
 		select rnum, sabang_id, sabang_name, sabang_price,
@@ -94,7 +110,7 @@
 		where rnum &gt;= #{startRowNo}
 	</select>
 	
-	<!-- »ç¹æ Á¤·Ä_Á¶È¸¼ö  -->
+	<!-- ì‚¬ë°© ì •ë ¬_ì¡°íšŒìˆ˜  -->
 	<select id="selectByView" parameterType="pager"
 		resultType="sabang">
 		select rnum, sabang_id, sabang_name, sabang_price,
@@ -120,7 +136,7 @@
       select count(*) from sabang
     </select>
 	
-	<!-- ¸ÞÀÎ »ç¹æ ÆÇ¸ÅÀ² top3 -->
+	<!-- ë©”ì¸ ì‚¬ë°© íŒë§¤ìœ¨ top3 -->
 	<select id="selectTop3" resultType="sabang">
 		select rownum, sabang_id, sabang_name, sabang_price,
 		sabang_saleprice, sabang_buycount, sabang_viewcount,
@@ -136,7 +152,7 @@
 		
 	</select>
 	
-	<!-- »ç¹æ Á¶È¸¼ö ¾÷µ¥ÀÌÆ® -->
+	<!-- ì‚¬ë°© ì¡°íšŒìˆ˜ ì—…ë°ì´íŠ¸ -->
 	<update id="updateViewCount" parameterType="int">
 		update sabang set
 		sabang_viewcount=sabang_viewcount+1 
@@ -144,12 +160,12 @@
 	</update>
 	
 	<update id="updateBuyCount"  parameterType="int">
-	update sabang set
+		update sabang set
 		sabang_buycount=sabang_buycount+1 
 		where sabang_id=#{sabang_id}
 	</update>
 	
-	<!-- ¿¹»ê¿¡ ¸Â´Â 6°³ ÃßÃµ ¾ÆÀÌÅÛ Ãâ·Â -->
+	<!-- ì˜ˆì‚°ì— ë§žëŠ” 6ê°œ ì¶”ì²œ ì•„ì´í…œ ì¶œë ¥ -->
 		<select id="selectByPrice" resultType="sabang" parameterType="int">
 		select rownum, sabang_id, sabang_name, sabang_price,
 		sabang_saleprice, sabang_buycount, sabang_viewcount,

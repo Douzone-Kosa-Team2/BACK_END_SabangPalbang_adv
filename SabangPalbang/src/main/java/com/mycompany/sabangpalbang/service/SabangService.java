@@ -37,16 +37,33 @@ public class SabangService {
 		List<Product> productlist = productDao.selectAll(sabang_id);
 		return productlist;
 	}
-
 	
+	//사방 생성
+	public int insert(Sabang sabang) {
+		 return sabangDao.insert(sabang);
+	}
+	
+	
+	//사방 수정
+	public int update(Sabang sabang) {
+		 return sabangDao.update(sabang);
+	}
+
 	//사방 게시물 삭제
 	public int delete(int sabang_id) {
 		return sabangDao.deleteBySid(sabang_id);		
 	}
 
-	public void update(Sabang sabang) {
-		// TODO Auto-generated method stub
-		
+	public int insertProduct(Product product) {
+		return productDao.insertProduct(product);
+	}
+
+	public int updateProduct(Product product) {
+		return productDao.updateProduct(product);
+	}
+
+	public int deleteProduct(int product_id) {
+		return productDao.deleteProduct(product_id);				
 	}
 
 }

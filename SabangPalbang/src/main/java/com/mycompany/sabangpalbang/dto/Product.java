@@ -1,5 +1,7 @@
 package com.mycompany.sabangpalbang.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Product {
 	private int product_id;
 	private String product_name;
@@ -13,6 +15,14 @@ public class Product {
 	private String product_explain1;
 	private String product_explain2;
 	
+	private MultipartFile pattach;
+	
+	public MultipartFile getPattach() {
+		return pattach;
+	}
+	public void setPattach(MultipartFile pattach) {
+		this.pattach = pattach;
+	}
 	public int getProduct_id() {
 		return product_id;
 	}

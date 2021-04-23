@@ -13,4 +13,6 @@ public interface SabangDao {
 	int count();
 	Sabang selectBySid(int sabang_id);
 	int deleteBySid(int sabang_id);
+	int insert(Sabang sabang);
+	int update(Sabang sabang);
 }
