@@ -29,8 +29,22 @@
 		where product_id=#{product_id}
 	</select>	
 	
+	<select id="selectSabangId" parameterType="int" resultType="product">
+		select sabang_id
+		from product
+		where product_id=#{product_id}
+	</select>	
+	
 	<update id="updateProduct" parameterType="product">
 		update product set
+		
+		<if test="product_imgoname==null">
+			product_name=#{product_name},
+			product_price=#{product_price},
+			product_explain1=#{product_explain1},
+			product_explain2=#{product_explain2}
+		</if>
+		<if test="product_imgoname!=null">
 			product_name=#{product_name},
 			product_price=#{product_price},
 			product_imgoname=#{product_imgoname},
@@ -38,6 +52,8 @@
 			product_imgtype=#{product_imgtype},
 			product_explain1=#{product_explain1},
 			product_explain2=#{product_explain2}
+		</if>
+			
 		where product_id=#{product_id}
 	</update>	
 	<!-- 상품은 한 패키지에만 종속하기 때문에 수정시에는 이름, 패키지 id, 조회수는 바뀔일이 없어서 안줌 -->

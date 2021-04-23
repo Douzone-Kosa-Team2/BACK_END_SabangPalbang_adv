@@ -66,4 +66,9 @@ public class SabangService {
 		return productDao.deleteProduct(product_id);				
 	}
 
+	public Product getSabangId(int product_id) {
+		Product result = productDao.selectAllProduct(product_id);
+		return result;
+	}
+
 }
