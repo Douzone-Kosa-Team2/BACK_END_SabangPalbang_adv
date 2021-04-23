@@ -41,5 +41,9 @@ public class PalbangService {
 		return palbangdetail;
 	}
 
+	public Palbang_detail getPalbangDetailByNo(int palbang_detailno) {
+		return palbangDetailDao.selectPalbangDetail(palbang_detailno);
+	}
+
 	
 }

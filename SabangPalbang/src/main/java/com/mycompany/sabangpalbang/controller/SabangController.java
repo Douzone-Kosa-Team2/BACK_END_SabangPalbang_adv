@@ -2,7 +2,6 @@ package com.mycompany.sabangpalbang.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
@@ -38,6 +37,7 @@ public class SabangController {
 
 	@Autowired
 	private SabangService sabangService;
+	
 
 	@GetMapping("") // 사방 목록을 보여달라고 할 떼
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
@@ -98,15 +98,15 @@ public class SabangController {
 	// 사방 수정
 	@PutMapping("")
 	public Sabang update(Sabang sabang) {
-		logger.info("" + sabang.getSabang_id());
-		logger.info(sabang.getSabang_name());
-		logger.info("" + sabang.getSabang_price());
-		logger.info("" + sabang.getSabang_saleprice());
-		logger.info("" + sabang.getSabang_viewcount());
-		logger.info("" + sabang.getSabang_buycount());
-		logger.info("" + sabang.getSattach());
-		logger.info("" + sabang.getSabang_imgoname());
-		logger.info("" + sabang.getSabang_state());
+//		logger.info("" + sabang.getSabang_id());
+//		logger.info(sabang.getSabang_name());
+//		logger.info("" + sabang.getSabang_price());
+//		logger.info("" + sabang.getSabang_saleprice());
+//		logger.info("" + sabang.getSabang_viewcount());
+//		logger.info("" + sabang.getSabang_buycount());
+//		logger.info("" + sabang.getSattach());
+//		logger.info("" + sabang.getSabang_imgoname());
+//		logger.info("" + sabang.getSabang_state());
 
 		if (sabang.getSattach() != null && !sabang.getSattach().isEmpty()) {
 			MultipartFile mf = sabang.getSattach();
@@ -126,7 +126,7 @@ public class SabangController {
 		return sabang;
 	}
 
-	// 첨부다운
+	// 사방 이미지 출력
 	@GetMapping("/sattach/{sabang_id}")
 	public void download(@PathVariable int sabang_id, HttpServletResponse response) {
 		try {
@@ -153,22 +153,50 @@ public class SabangController {
 		}
 	}
 
-	// 게시물 삭제
+	// 사방 삭제
 	@DeleteMapping("/{sabang_id}")
 	public void delete(@PathVariable int sabang_id) {
 		sabangService.delete(sabang_id);
 	}
+	
+	// 상품 이미지 출력
+	@GetMapping("/pattach/{product_id}")
+	public void downloadProduct(@PathVariable int product_id, HttpServletResponse response) {
+		try {
+			Product product = sabangService.getProduct(product_id);
+			String pattachoname = product.getProduct_imgoname();
+			if (pattachoname == null)
+				return;
+			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String pattachsname = product.getProduct_imgsname();
+			String pattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_detail/" + pattachsname;
+			String pattachtype = product.getProduct_imgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
+			response.setContentType(pattachtype);
+
+			InputStream is = new FileInputStream(pattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// 상품 등록
 
 	@PostMapping("/detail")
 	public Product createProduct(Product product) {
-			logger.info(product.getProduct_name());
-			logger.info(""+product.getSabang_id());
-			logger.info(""+product.getProduct_price());
-			logger.info(""+product.getProduct_buycount());
-			logger.info(""+product.getProduct_explain1());
-			logger.info(""+product.getProduct_explain2());
-			logger.info(""+product.getPattach());
+//			logger.info(product.getProduct_name());
+//			logger.info(""+product.getSabang_id());
+//			logger.info(""+product.getProduct_price());
+//			logger.info(""+product.getProduct_buycount());
+//			logger.info(""+product.getProduct_explain1());
+//			logger.info(""+product.getProduct_explain2());
+//			logger.info(""+product.getPattach());
 
 		if (product.getPattach() != null && !product.getPattach().isEmpty()) {
 			MultipartFile mf = product.getPattach();
@@ -191,52 +219,19 @@ public class SabangController {
 		return product;
 	}
 	
-//	@PostMapping("/detail2")
-//	public void test(Product product) throws Exception {
-//		logger.info(product.getProduct_name());
-//		logger.info(""+product.getSabang_id());
-//		logger.info(""+product.getProduct_price());
-//		logger.info(""+product.getProduct_buycount());
-//		logger.info(""+product.getProduct_explain1());
-//		logger.info(""+product.getProduct_explain2());
-//		logger.info(""+product.getPattach());
-//		if (product.getPattach() != null && !product.getPattach().isEmpty()) {
-//			MultipartFile mf = product.getPattach();
-//			product.setProduct_imgoname(mf.getOriginalFilename());
-//			product.setProduct_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
-//			product.setProduct_imgtype(mf.getContentType());
-//			try {
-//				File file = new File("C:/Users/ant94/git/upload/" + product.getProduct_imgsname());
-////				C:/Users/ant94/Documents/JavaProject/upload2/
-//				mf.transferTo(file);
-//				/*ileOutputStream fos = new FileOutputStream(file);
-//				InputStream is = mf.getInputStream();
-//				byte[] data = new byte[1024];
-//				int readBytes = -1;
-//				while((readBytes=is.read(data)) != -1) {
-//					fos.write(data, 0, readBytes);
-//				}
-//				fos.flush();
-//				fos.close();
-//				is.close();*/
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}	
 
 	// 상품 수정
 
 	@PutMapping("/detail")
 	public Product updateProduct(Product product) {
-			logger.info(""+product.getProduct_id());
-			logger.info(product.getProduct_name());
-			logger.info(""+product.getSabang_id());
-			logger.info(""+product.getProduct_price());
-			logger.info(""+product.getProduct_buycount());
-			logger.info(""+product.getProduct_explain1());
-			logger.info(""+product.getProduct_explain2());
-			logger.info(""+product.getPattach());
+//			logger.info(""+product.getProduct_id());
+//			logger.info(product.getProduct_name());
+//			logger.info(""+product.getSabang_id());
+//			logger.info(""+product.getProduct_price());
+//			logger.info(""+product.getProduct_buycount());
+//			logger.info(""+product.getProduct_explain1());
+//			logger.info(""+product.getProduct_explain2());
+//			logger.info(""+product.getPattach());
 
 		if (product.getPattach() != null && !product.getPattach().isEmpty()) {
 			MultipartFile mf = product.getPattach();

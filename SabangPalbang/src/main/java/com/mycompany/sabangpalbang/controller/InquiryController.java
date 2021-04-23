@@ -1,11 +1,16 @@
 package com.mycompany.sabangpalbang.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +26,7 @@ import com.mycompany.sabangpalbang.service.InquiryService;
 import com.mycompany.sabangpalbang.service.SabangService;
 
 @RestController
-@RequestMapping("inquiry_m")
+@RequestMapping("/inquiry_m")
 public class InquiryController {
 	private static final Logger logger = LoggerFactory.getLogger(PalbangController.class);
 	
@@ -97,5 +102,31 @@ public class InquiryController {
 		logger.info("controller - 문의내용 삭제 ");
 		inquiryService.deleteInquiry(inquiry_id);
 	}
+	
+	// 사방 이미지 출력
+	@GetMapping("/sattach/{sabang_id}")
+	public void download(@PathVariable int sabang_id, HttpServletResponse response) {
+		try {
+			Sabang sabang = sabangService.getSabang(sabang_id);
+			String sattachoname = sabang.getSabang_imgoname();
+			if (sattachoname == null)
+				return;
+			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String sattachsname = sabang.getSabang_imgsname();
+			String sattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/" + sattachsname;
+			String sattachtype = sabang.getSabang_imgtype();
 
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
+			response.setContentType(sattachtype);
+
+			InputStream is = new FileInputStream(sattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
