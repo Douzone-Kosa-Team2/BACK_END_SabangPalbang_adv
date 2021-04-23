@@ -2,16 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.sabangpalbang.dao.MemberDao">
-	
+
 
 	<select id="selectByMember" parameterType="int"
 		resultType="member">
-		select  member_email, member_name
+		select member_email, member_name
 		from member
-		where member_id=#{member_id}
+		where
+		member_id=#{member_id}
+	</select>
+
+	<select id="selectMember" parameterType="pager"
+		resultType="member">
+		select rnum, member_id, member_email, member_name,
+		member_phone,
+		member_nickname, join_date, member_authority
+		from (
+		select rownum as rnum, member_id, member_email, member_name,
+		member_phone,
+		member_nickname, join_date, member_authority
+		from (
+		select member_id, member_email, member_name,
+		member_phone,
+		member_nickname,
+		join_date, member_authority
+		from member
+		where member_authority='ROLE_MEMBER'
+		order by member_name
+
+		)
+		where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from member where member_authority='ROLE_MEMBER'
 	</select>
 	
-
+	<delete id="deleteMember" parameterType="int">
+		delete from member
+		where member_id=#{member_id}
+	</delete>
 
 </mapper>
 

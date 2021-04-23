@@ -71,4 +71,8 @@ public class SabangService {
 		return result;
 	}
 
+	public Product getProduct(int product_id) {
+		return productDao.selectByProduct(product_id);
+	}
+
 }

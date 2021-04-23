@@ -10,5 +10,6 @@ import com.mycompany.sabangpalbang.dto.Palbang_detail;
 public interface PalbangDetailDao {
 
 	List<Palbang_detail> selectAll(int palbang_id);
+	Palbang_detail selectPalbangDetail(int palbang_detailno);
 
 }

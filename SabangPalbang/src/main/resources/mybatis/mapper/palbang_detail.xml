@@ -27,6 +27,12 @@
 		where palbang_id=#{palbang_id}
 	</select>
 	
+	<select id="selectPalbangDetail" parameterType="int" resultType="palbang_detail">
+		select palbang_detailno, palbang_id, palbang_dimgoname, palbang_dimgsname, palbang_dimgtype, palbang_explain
+		from palbang_detail
+		where palbang_detailno=#{palbang_detailno}
+	</select>
+	
 	<update id="updatePalbangDetail" parameterType="palbang_detail">
 		update palbang_detail set
 		palbang_dimgoname=#{palbang_dimgoname}, 

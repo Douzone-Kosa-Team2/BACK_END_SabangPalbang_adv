@@ -1,12 +1,18 @@
 package com.mycompany.sabangpalbang.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +56,57 @@ public class PalbangController {
 		map.put("palbang", palbang);
 		map.put("palbanglist", palbanglist);
 		return map;
+	}
+	
+	@GetMapping("/pattach/{palbang_id}")
+	public void downloadPalbang(@PathVariable int palbang_id, HttpServletResponse response) {
+		try {
+			Palbang palbang = palbangService.getPalbang(palbang_id);
+			String pattachoname = palbang.getPalbang_imgoname();
+			if (pattachoname == null)
+				return;
+			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String pattachsname = palbang.getPalbang_imgsname();
+			String pattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/palbang_post/" + pattachsname;
+			String pattachtype = palbang.getPalbang_imgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
+			response.setContentType(pattachtype);
+
+			InputStream is = new FileInputStream(pattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@GetMapping("/pDattach/{palbang_detailno}")
+	public void downloadPalbangDetail(@PathVariable int palbang_detailno, HttpServletResponse response) {
+		try {
+			Palbang_detail palbang_detail = palbangService.getPalbangDetailByNo(palbang_detailno);
+			String pattachoname = palbang_detail.getPalbang_dimgoname();
+			if (pattachoname == null)
+				return;
+			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String pattachsname = palbang_detail.getPalbang_dimgsname();
+			String pattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/palbang_detail/" + pattachsname;
+			String pattachtype = palbang_detail.getPalbang_dimgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
+			response.setContentType(pattachtype);
+
+			InputStream is = new FileInputStream(pattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// 게시물 삭제
