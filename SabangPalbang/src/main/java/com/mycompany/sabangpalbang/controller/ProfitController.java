@@ -1,27 +1,37 @@
 package com.mycompany.sabangpalbang.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycompany.sabangpalbang.dto.OrderMain;
+import com.mycompany.sabangpalbang.dto.Product;
+import com.mycompany.sabangpalbang.dto.Sabang;
 import com.mycompany.sabangpalbang.service.OrderService;
+import com.mycompany.sabangpalbang.service.ProfitService;
 
 @RestController
 @RequestMapping("/profit_m")
 public class ProfitController {
-	private static final Logger logger = LoggerFactory.getLogger(ProfitController.class);
-	
-	
+	@Autowired
+	private ProfitService profitService;
 	@Autowired
 	private OrderService orderService;
+	private static final Logger logger = LoggerFactory.getLogger(ProfitController.class);
 	
 	//채정 - 회원 실적
 	@GetMapping("/member")
@@ -33,9 +43,73 @@ public class ProfitController {
 	
 	//종현 - 사방 실적
 	@GetMapping("/sabang")
-	public void test2() {
-		logger.info("test2");
+	public Map<String, Object> showBestSabang() {
+		//logger.info("사방 실적");
 		
+		Sabang sabang = profitService.getBestSabang();
+		Product product = profitService.getBestProduct();
+				
+		//logger.info(""+sabang);
+		//logger.info(""+product);
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("BestSabang", sabang);
+		map.put("BestProduct", product);
+		return map;
+	}
+	
+	// 사방 이미지 출력
+	@GetMapping("/sabang/sattach/{sabang_id}")
+	public void sabangImg(@PathVariable int sabang_id, HttpServletResponse response) {
+		try {
+			Sabang sabang = profitService.getSabang(sabang_id);
+			String sattachoname = sabang.getSabang_imgoname();
+			if (sattachoname == null)
+				return;
+			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String sattachsname = sabang.getSabang_imgsname();
+			String sattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/" + sattachsname;
+			String sattachtype = sabang.getSabang_imgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
+			response.setContentType(sattachtype);
+
+			InputStream is = new FileInputStream(sattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 상품 이미지 출력
+	@GetMapping("/sabang/pattach/{product_id}")
+	public void downloadProduct(@PathVariable int product_id, HttpServletResponse response) {
+		try {
+			Product product = profitService.getProduct(product_id);
+			String pattachoname = product.getProduct_imgoname();
+			if (pattachoname == null)
+				return;
+			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String pattachsname = product.getProduct_imgsname();
+			String pattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_detail/" + pattachsname;
+			String pattachtype = product.getProduct_imgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
+			response.setContentType(pattachtype);
+
+			InputStream is = new FileInputStream(pattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

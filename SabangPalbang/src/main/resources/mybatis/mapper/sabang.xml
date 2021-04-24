@@ -219,5 +219,19 @@
 		where sabang_id=#{sabang_id}
 	</delete>
 	
+	<!-- 사방 판매율 top1 -->
+	<select id="selectBestSabang" resultType="sabang">
+		select rownum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+		from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state
+				from sabang
+				order by sabang_buycount desc
+			)
+		where rownum &lt;= 1
+	</select>
 
 </mapper>

@@ -10,6 +10,8 @@ import com.mycompany.sabangpalbang.dao.PalbangDao;
 import com.mycompany.sabangpalbang.dao.PalbangDetailDao;
 import com.mycompany.sabangpalbang.dao.ProductDao;
 import com.mycompany.sabangpalbang.dao.SabangDao;
+import com.mycompany.sabangpalbang.dto.Product;
+import com.mycompany.sabangpalbang.dto.Sabang;
 
 @Service
 public class ProfitService {
@@ -31,10 +33,27 @@ public class ProfitService {
 	private OrderMainDao orderMainDao;
 	@Autowired
 	private OrderDetailDao orderDetailDao;
+
 	
 	//채정 - 멤버
 	
 	//종현 - 사방
+	public Sabang getBestSabang() {
+		return sabangDao.selectBestSabang();
+	}	
+	public Product getBestProduct() {
+		return productDao.selectBestProduct();
+	}
+	public Sabang getSabang(int sabang_id) {
+		return sabangDao.selectBySid(sabang_id);
+	}
+	public Product getProduct(int product_id) {
+		return productDao.selectByProduct(product_id);
+	}
 	
 	//민상 - 주문
+
+
+
+
 }
