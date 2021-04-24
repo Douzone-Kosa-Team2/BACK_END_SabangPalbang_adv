@@ -44,10 +44,20 @@ public class SabangController {
 		logger.info("sabang_list");
 		int totalRows = sabangService.getCount();
 		Pager pager = new Pager(6, 5, totalRows, pageNo);
-		List<Sabang> sabangs = sabangService.getList(pager);
+		List<Sabang> sabangBuyList = sabangService.getSabangList_Buy(pager);
+		List<Sabang> sabangViewList = sabangService.getSabangList_View(pager);
+		List<Sabang> sabangHighList = sabangService.getSabangList_High(pager);
+		List<Sabang> sabangLowList = sabangService.getSabangList_Low(pager);
+		
+		
+		
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
-		map.put("sabang", sabangs);
+		map.put("sabangBuyList", sabangBuyList);
+		map.put("sabangViewList", sabangViewList);
+		map.put("sabangHighList", sabangHighList);
+		map.put("sabangLowList", sabangLowList);
 		return map;
 	}
 

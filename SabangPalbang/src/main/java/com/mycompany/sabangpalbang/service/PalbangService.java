@@ -23,11 +23,6 @@ public class PalbangService {
 		return palbangDao.count();
 	}
 
-	public List<Palbang> getList(Pager pager) {
-		
-		return palbangDao.selectByLike(pager);
-	}
-
 	public int delete(int palbang_id) {
 		return palbangDao.deleteByPid(palbang_id);
 	}
@@ -43,6 +38,26 @@ public class PalbangService {
 
 	public Palbang_detail getPalbangDetailByNo(int palbang_detailno) {
 		return palbangDetailDao.selectPalbangDetail(palbang_detailno);
+	}
+
+	public List<Palbang> getPalbangList_Like(Pager pager) { // default
+		List<Palbang> list = palbangDao.selectByLike(pager);
+		return list;
+	}
+	
+	public List<Palbang> getPalbangList_View(Pager pager) { 
+		List<Palbang> list = palbangDao.selectByView(pager);
+		return list;
+	}
+	
+	public List<Palbang> getPalbangList_New(Pager pager) { 
+		List<Palbang> list = palbangDao.selectByNew(pager);
+		return list;
+	}
+	
+	public List<Palbang> getPalbangList_Old(Pager pager) { 
+		List<Palbang> list = palbangDao.selectByOld(pager);
+		return list;
 	}
 
 	
