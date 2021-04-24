@@ -21,6 +21,7 @@ public interface ProductDao {
 	int updateProduct(Product product);
 	int deleteProduct(int product_id);
 	public int selectSabangId(int product_id);
+	public Product selectBestProduct();
 
 	
 }

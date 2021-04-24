@@ -86,4 +86,18 @@
 		where product_id=#{product_id}	   
 	</select>
 	
+	<!-- 가장 판매율 높은 상품 -->
+	<select id="selectBestProduct" resultType="product">
+	select rownum, product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
+			   product_imgsname, product_imgtype, product_explain1, product_explain2
+	from (
+			select product_id, product_name, sabang_id, product_price, product_buycount, product_imgoname,
+			product_imgsname, product_imgtype, product_explain1, product_explain2
+			from product
+			order by product_buycount desc
+		  )
+	where rownum &lt;= 1
+			
+	</select>	
+	
 </mapper>

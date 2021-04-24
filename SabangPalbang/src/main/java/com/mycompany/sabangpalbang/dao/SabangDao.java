@@ -29,5 +29,6 @@ public interface SabangDao {
 	int deleteBySid(int sabang_id);
 	int insert(Sabang sabang);
 	int update(Sabang sabang);
+	public Sabang selectBestSabang();
 	
 }
