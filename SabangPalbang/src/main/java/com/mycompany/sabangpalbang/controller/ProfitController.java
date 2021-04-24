@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/profit")
+@RequestMapping("/profit_m")
 public class ProfitController {
 	private static final Logger logger = LoggerFactory.getLogger(ProfitController.class);
 	
