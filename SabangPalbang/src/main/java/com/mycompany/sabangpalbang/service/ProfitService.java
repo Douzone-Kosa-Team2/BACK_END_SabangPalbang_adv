@@ -1,5 +1,7 @@
 package com.mycompany.sabangpalbang.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.mycompany.sabangpalbang.dao.PalbangDao;
 import com.mycompany.sabangpalbang.dao.PalbangDetailDao;
 import com.mycompany.sabangpalbang.dao.ProductDao;
 import com.mycompany.sabangpalbang.dao.SabangDao;
+import com.mycompany.sabangpalbang.dto.Member;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 
@@ -36,6 +39,21 @@ public class ProfitService {
 
 	
 	//채정 - 멤버
+	public int getMemberCount() {
+		return memberDao.selectMemberCount();
+	}
+	public int getRecentJoinCount() {
+		return memberDao.selectJoinCount();
+	}
+	public int getBuyMemberCount() {
+		return memberDao.selectBuyMemCount();
+	}
+	public List<Member> getVipMembers() {
+		return memberDao.selectVipMemers();
+	}
+	public List<Member> getInfluencers() {
+		return memberDao.selectInfluencers();
+	}
 	
 	//종현 - 사방
 	public Sabang getBestSabang() {
@@ -50,6 +68,7 @@ public class ProfitService {
 	public Product getProduct(int product_id) {
 		return productDao.selectByProduct(product_id);
 	}
+
 	
 	//민상 - 주문
 
