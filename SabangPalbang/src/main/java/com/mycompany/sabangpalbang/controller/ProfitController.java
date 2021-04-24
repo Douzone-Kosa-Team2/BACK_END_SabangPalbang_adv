@@ -135,21 +135,25 @@ public class ProfitController {
 	@GetMapping("/order")
 	public Map<String, Object> orderperformance() {
 		logger.info("주문실적");
-		Calendar cal = Calendar.getInstance();
-		int mmonth = (Calendar.MONTH) + 1;
-		
+		int month = (Calendar.MONTH) + 1;
+
+		//모든 날의 order정보와 최근 3달 order정보
 		List<OrderMain> totalmonth = profitService.getMonthJanuary();
 		List<OrderMain> month3 = new ArrayList<>();
 		List<OrderMain> month2 = new ArrayList<>();
 		List<OrderMain> month1 = new ArrayList<>();
-		List<Integer> totalprice = new ArrayList<>();
+		
+		List<Integer> totalprice3 = new ArrayList<>();
+		List<Integer> totalprice2 = new ArrayList<>();
+		List<Integer> totalprice1 = new ArrayList<>();
+		
 		
 		for(int i=0; i<totalmonth.size(); i++) {
-			if((mmonth) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
+			if((month) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
 				month3.add(totalmonth.get(i));
 				
 			}
-			else if((mmonth-1) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
+			else if((month-1) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
 				
 				month2.add(totalmonth.get(i));
 				
@@ -159,29 +163,74 @@ public class ProfitController {
 			}
 		}
 		
-		
 		int total = 0;
+		int threemonthtotal = 0;
 		
 		for(int i=0; i<month3.size(); i++) {
 			total += month3.get(i).getOrder_price();
+			threemonthtotal += month3.get(i).getOrder_price();
 		}
-		totalprice.add(total);
+		totalprice3.add(total);
 		total=0;
+		
 		for(int i=0; i<month2.size(); i++) {
 			total += month2.get(i).getOrder_price();
+			threemonthtotal += month2.get(i).getOrder_price();
 		}
-		totalprice.add(total);
+		totalprice2.add(total);
 		total=0;
+		
 		for(int i=0; i<month1.size(); i++) {
 			total += month1.get(i).getOrder_price();
+			threemonthtotal += month1.get(i).getOrder_price();
 		}
-		totalprice.add(total);
+		totalprice1.add(total);
+		total = 0;
+		
+		//총 주문건수
+		List<Integer> totalCount = new ArrayList<>();
+		int totalccount = profitService.getTotalCount();
+		totalCount.add(totalccount);
+		
+		//최근 3개월 판매금액
+		List<Integer> threeTotalCount = new ArrayList<>();
+		threeTotalCount.add(threemonthtotal);
+		
+		
+		//총 판매금액
+		List<Integer> sumtotalprice = new ArrayList<>();
+		for(int i=0; i<totalmonth.size(); i++) {
+			total += totalmonth.get(i).getOrder_price();
+			
+		}
+		sumtotalprice.add(total);
+		
+		
+		//결제 방법
+		List<Integer> cardpaycount = new ArrayList<>();
+		int cardcount = profitService.getCardPaycount();
+		cardpaycount.add(cardcount);
+		List<Integer> depositpaycount = new ArrayList<>();
+		int depositcount = profitService.getDepositPayCount();
+		depositpaycount.add(depositcount);
+		List<Integer> phonepaycount = new ArrayList<>();
+		int phonecount = profitService.getPhonePayCount();
+		phonepaycount.add(phonecount);
+		
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("month3", month3);
-		map.put("month2", month2);
-		map.put("month1", month1);
-		map.put("totalprice", totalprice);
+		map.put("month3", month3.size());
+		map.put("month2", month2.size());
+		map.put("month1", month1.size());
+		map.put("sumtotalprice", sumtotalprice);
+		map.put("totalprice3", totalprice3);
+		map.put("totalprice2", totalprice2);
+		map.put("totalprice1", totalprice1);
+		map.put("totalCount", totalCount);
+		map.put("threeTotalCount", threeTotalCount);
+		map.put("cardpaycount", cardpaycount);
+		map.put("depositpaycount", depositpaycount);
+		map.put("phonepaycount", phonepaycount);
 		
 		return map;
 		

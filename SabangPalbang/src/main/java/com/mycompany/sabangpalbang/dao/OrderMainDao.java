@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mycompany.sabangpalbang.dto.OrderMain;
-import com.mycompany.sabangpalbang.dto.Ordermonthbuy;
 import com.mycompany.sabangpalbang.dto.Pager;
 import com.mycompany.sabangpalbang.dto.Sabang;
 
@@ -34,6 +33,8 @@ public interface OrderMainDao {
 	public int postSuccesscount();
 	public List<OrderMain> selectOrderByPostSuccessList(Pager postSuccesspager);
 	public List<OrderMain> selectByMonthJanuaryBuy();
-	
+	public int cardpaycount();
+	public int depositpaycount();
+	public int phonepaycount();
 	
 }
