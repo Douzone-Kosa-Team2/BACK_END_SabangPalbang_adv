@@ -32,4 +32,9 @@ public interface MemberDao {
 	public int count();
 	public List<Member> selectMember(Pager pager);
 	public int deleteMember(int member_id);
+	public int selectMemberCount();
+	public int selectJoinCount();
+	public int selectBuyMemCount();
+	public List<Member> selectVipMemers();
+	public List<Member> selectInfluencers();
 }

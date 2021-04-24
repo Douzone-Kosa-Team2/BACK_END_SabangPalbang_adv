@@ -3,7 +3,9 @@ package com.mycompany.sabangpalbang.controller;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mycompany.sabangpalbang.dto.Member;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 import com.mycompany.sabangpalbang.service.ProfitService;
@@ -30,9 +33,27 @@ public class ProfitController {
 	
 	//채정 - 회원 실적
 	@GetMapping("/member")
-	public void test1() {
-		logger.info("test");
+	public Map<String, Object> showBestMember() {
+		logger.info("회원 실적 api");
+		int totalMemberNum = profitService.getMemberCount(); // 총 회원수 
+		int recentJoinNum = profitService.getRecentJoinCount(); // 최근 한 달간 가입한 회원수 
+		int buyMemberNum = profitService.getBuyMemberCount(); // 실구매 회원수 
+		List<Member> vipMembers = profitService.getVipMembers(); // 우수 고객 top5 (주문 횟수 기준)
+		List<Member> influencers = profitService.getInfluencers(); // 인플루언서 고객 top5 (팔방 작성 횟수 기준)
 		
+		logger.info("" + totalMemberNum);
+		logger.info("" + recentJoinNum);
+		logger.info("" + buyMemberNum);
+		// 멤버 객체로 넘기는거 ㄴelect 문에  컬럼 멤버 정ㅈ보 추가하기 
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("totalMemberNum", totalMemberNum);
+		map.put("recentJoinNum", recentJoinNum);
+		map.put("buyMemberNum", buyMemberNum);
+		map.put("vipMembers", vipMembers);
+		map.put("influencers", influencers);
+		return map;
 	}
 	
 	
