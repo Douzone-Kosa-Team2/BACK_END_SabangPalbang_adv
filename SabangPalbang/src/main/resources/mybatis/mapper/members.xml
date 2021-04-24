@@ -2,12 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.sabangpalbang.dao.MemberDao">
-	<select id="selectByMember" parameterType="int"
-		resultType="member">
-		select member_email, member_name
+	<!-- 회원 조회 : 아이디 또는 이름  -->
+	<select id="selectMemberById" parameterType="int" resultType="member">
+		select member_id, member_email, member_name, member_phone,
+				member_nickname, join_date, member_authority
 		from member
-		where
-		member_id=#{member_id}
+		where member_id=#{member_id}
+	</select>
+	
+	<select id="selectMemberByName" parameterType="string" resultType="member">
+		select member_id, member_email, member_name, member_phone,
+				member_nickname, join_date, member_authority
+		from member
+		where member_name=#{member_name}
 	</select>
 
 	<select id="selectMember" parameterType="pager"
@@ -43,7 +50,7 @@
 		where member_id=#{member_id}
 	</delete>
 	
-	<!-- profit -->
+	<!-- profit 회원 실적  -->
 	<select id="selectMemberCount" resultType="int">
 		select count(*)
 		from member
@@ -62,27 +69,28 @@
 	</select>
 	
 	<select id="selectVipMemers" resultType="member">
-		select rownum, member_name
+		select rownum, member_name, member_id, member_email
 		from(
-		    select order_memberid, count(order_memberid), member_name
+		    select order_memberid, count(order_memberid), member_name, member_id, member_email
 		    from ordermain, member
 		    where order_memberid = member_id
-		    group by order_memberid, member_name
+		    group by order_memberid, member_name, member_id, member_email
 		    order by count(order_memberid) desc
 		)
 		where rownum &lt;= 5
 	</select>
 	
 	<select id="selectInfluencers" resultType="member">
-	select rownum, member_nickname
+	select rownum, member_nickname, member_id, member_email
 	from(
-	    select member_nickname, count(member_nickname)
+	    select member_nickname, count(member_nickname), member_id, member_email
 	    from member, palbang
 	    where palbang_nickname = member_nickname
-	    group by palbang_nickname
+	    group by member_nickname, member_id, member_email
 	    order by count(palbang_nickname) desc
 	)
 	where rownum &lt;= 5
+	
 	</select>
 
 </mapper>

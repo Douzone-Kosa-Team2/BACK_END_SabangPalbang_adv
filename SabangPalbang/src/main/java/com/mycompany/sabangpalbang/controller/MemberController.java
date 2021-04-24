@@ -25,12 +25,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-	
+
 	@GetMapping("")
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
-		logger.info("auth list");
 		int totalRows = memberService.getCount();
-		logger.info(""+totalRows);
 		Pager pager = new Pager(6, 5, totalRows, pageNo);
 		List<Member> members = memberService.getList(pager);
 		Map<String, Object> map = new HashMap<>();
@@ -38,10 +36,19 @@ public class MemberController {
 		map.put("members", members);
 		return map;
 	}
-	
+
 	// 게시물 삭제
-		@DeleteMapping("/{member_id}")
-		public void delete(@PathVariable int member_id) {
-			memberService.deleteMember(member_id);
-		}
+	@DeleteMapping("/{member_id}")
+	public void delete(@PathVariable int member_id) {
+		memberService.deleteMember(member_id);
+	}
+	
+	// 회원 조회 : 아이디(int) 또는 이름(string)
+	@GetMapping("/search/{target}")
+	public List<Member> searchMember(@PathVariable String target) {
+		List<Member> members = memberService.getMemberBySearch(target);
+		logger.info("mem size : " + members.size());
+		return members;
+	}
+	
 }
