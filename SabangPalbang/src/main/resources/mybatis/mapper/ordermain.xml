@@ -153,6 +153,24 @@
 		from ordermain
 		where order_state='배송완료'
     </select>
+    
+    <select id="cardpaycount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_payment ='payByCard'
+    </select>
+    
+    <select id="depositpaycount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_payment ='payByDeposit'
+    </select>
+    
+    <select id="phonepaycount" resultType="int">
+      	select count(*)
+		from ordermain
+		where order_payment ='payByPhone'
+    </select>
 	
 	<select id="selectByOid" parameterType="int" resultType="ordermain">
    		select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode	

@@ -13,6 +13,7 @@ import com.mycompany.sabangpalbang.dao.PalbangDetailDao;
 import com.mycompany.sabangpalbang.dao.ProductDao;
 import com.mycompany.sabangpalbang.dao.SabangDao;
 import com.mycompany.sabangpalbang.dto.Member;
+import com.mycompany.sabangpalbang.dto.OrderMain;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 
@@ -68,11 +69,26 @@ public class ProfitService {
 	public Product getProduct(int product_id) {
 		return productDao.selectByProduct(product_id);
 	}
-
+	
 	
 	//민상 - 주문
+	public List<OrderMain> getMonthJanuary() {
+		return orderMainDao.selectByMonthJanuaryBuy();
+	}
+	public int getTotalCount() {
+		return orderMainDao.countView();
+	}
 
-
-
+	public int getCardPaycount() {
+		return orderMainDao.cardpaycount();
+	}
+	
+	public int getDepositPayCount() {
+		return orderMainDao.depositpaycount();
+	}
+	
+	public int getPhonePayCount() {
+		return orderMainDao.phonepaycount();
+	}
 
 }
