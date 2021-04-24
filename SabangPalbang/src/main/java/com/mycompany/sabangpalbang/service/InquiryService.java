@@ -20,8 +20,6 @@ public class InquiryService {
 	}
 	
 	public List<Inquiry> getList(Pager pager, int sid, String ansstate){
-		System.out.println("ansstate: " + ansstate);
-		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
 		map.put("inquiry_sabangid", sid);
@@ -50,7 +48,5 @@ public class InquiryService {
 	public void deleteInquiry(int inquiry_id) {
 		inquiryDao.deleteInquiryByInquiryId(inquiry_id);
 	}
-	
-	
 	
 }

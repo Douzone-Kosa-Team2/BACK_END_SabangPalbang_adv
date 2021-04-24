@@ -40,19 +40,50 @@ public class InquiryController {
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
 		int totalRows = sabangService.getCount();
 		Pager pager = new Pager(5, 5, totalRows, pageNo);
-		List<Sabang> sabangs = sabangService.getSabangList_Buy(pager);
 		
-		for(int i=0; i<sabangs.size(); i++) {
-			int sid = sabangs.get(i).getSabang_id();
+		List<Sabang> sabangBuyList = sabangService.getSabangList_Buy(pager);
+		for(int i=0; i<sabangBuyList.size(); i++) {
+			int sid = sabangBuyList.get(i).getSabang_id();
 			int totalInquiryNum = inquiryService.getCount(sid, null); // 전체 개수 구해야함 
 			int noAnsInquiryNum = inquiryService.getNoAnsCount(sid);
-			sabangs.get(i).setTotalInquiryNum(totalInquiryNum);
-			sabangs.get(i).setNoAnsInquiryNum(noAnsInquiryNum);
+			sabangBuyList.get(i).setTotalInquiryNum(totalInquiryNum);
+			sabangBuyList.get(i).setNoAnsInquiryNum(noAnsInquiryNum);
 		}
+		
+		List<Sabang> sabangViewList = sabangService.getSabangList_View(pager);
+		for(int i=0; i<sabangViewList.size(); i++) {
+			int sid = sabangViewList.get(i).getSabang_id();
+			int totalInquiryNum = inquiryService.getCount(sid, null); // 전체 개수 구해야함 
+			int noAnsInquiryNum = inquiryService.getNoAnsCount(sid);
+			sabangViewList.get(i).setTotalInquiryNum(totalInquiryNum);
+			sabangViewList.get(i).setNoAnsInquiryNum(noAnsInquiryNum);
+		}
+		
+		List<Sabang> sabangHighList = sabangService.getSabangList_High(pager);
+		for(int i=0; i<sabangHighList.size(); i++) {
+			int sid = sabangHighList.get(i).getSabang_id();
+			int totalInquiryNum = inquiryService.getCount(sid, null); // 전체 개수 구해야함 
+			int noAnsInquiryNum = inquiryService.getNoAnsCount(sid);
+			sabangHighList.get(i).setTotalInquiryNum(totalInquiryNum);
+			sabangHighList.get(i).setNoAnsInquiryNum(noAnsInquiryNum);
+		}
+		
+		List<Sabang> sabangLowList = sabangService.getSabangList_Low(pager);
+		for(int i=0; i<sabangLowList.size(); i++) {
+			int sid = sabangLowList.get(i).getSabang_id();
+			int totalInquiryNum = inquiryService.getCount(sid, null); // 전체 개수 구해야함 
+			int noAnsInquiryNum = inquiryService.getNoAnsCount(sid);
+			sabangLowList.get(i).setTotalInquiryNum(totalInquiryNum);
+			sabangLowList.get(i).setNoAnsInquiryNum(noAnsInquiryNum);
+		}
+		
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
-		map.put("sabangs", sabangs);
+		map.put("sabangBuyList", sabangBuyList);
+		map.put("sabangViewList", sabangViewList);
+		map.put("sabangHighList", sabangHighList);
+		map.put("sabangLowList", sabangLowList);
 		return map;
 	}
 	
@@ -67,10 +98,7 @@ public class InquiryController {
 		}
 		// 전체 답변,답변중, 답변완료 에 따라서 카운트 개수 달라짐 !!! 
 		int totalRows = inquiryService.getCount(sid, ansstate); // 전체 개수 
-		
 		Pager pager = new Pager(6, 5, totalRows, pageNo);
-		logger.info("ansstate: " + ansstate);
-		
 		List<Inquiry> inquirylist = inquiryService.getList(pager, sid, ansstate);
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
@@ -81,7 +109,6 @@ public class InquiryController {
 	// 문의 내용 읽기 
 	@GetMapping("/inquiry/{inquiry_id}") 
 	public Inquiry inquiry(@PathVariable int inquiry_id) {
-		logger.info("controller - 문의내용 읽기");	
 	    Inquiry inquiry = inquiryService.getInquiry(inquiry_id);
 		return inquiry;
 	}
@@ -89,7 +116,6 @@ public class InquiryController {
 	// 문의 답변 남기기 
 	@PutMapping("")
 	public int answer(@RequestBody Inquiry inquiry) {
-		logger.info("controller - 문의 답변 남기기 ");
 		inquiryService.updateAns(inquiry.getInquiry_anscontent(), inquiry.getInquiry_id());
 		return inquiry.getInquiry_id();	
 	}
@@ -97,7 +123,6 @@ public class InquiryController {
 	// 문의 삭제 
 	@DeleteMapping("/{inquiry_id}")
 	public void delete(@PathVariable int inquiry_id) {
-		logger.info("controller - 문의내용 삭제 ");
 		inquiryService.deleteInquiry(inquiry_id);
 	}
 	
