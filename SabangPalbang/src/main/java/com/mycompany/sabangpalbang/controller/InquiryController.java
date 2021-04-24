@@ -44,7 +44,7 @@ public class InquiryController {
 		
 		for(int i=0; i<sabangs.size(); i++) {
 			int sid = sabangs.get(i).getSabang_id();
-			int totalInquiryNum = inquiryService.getCount(sid);
+			int totalInquiryNum = inquiryService.getCount(sid, null); // 전체 개수 구해야함 
 			int noAnsInquiryNum = inquiryService.getNoAnsCount(sid);
 			sabangs.get(i).setTotalInquiryNum(totalInquiryNum);
 			sabangs.get(i).setNoAnsInquiryNum(noAnsInquiryNum);
@@ -61,17 +61,15 @@ public class InquiryController {
 	public Map<String, Object> inquirylist(@PathVariable int sid,
 										   @RequestParam(defaultValue = "1") int pageNo,
 										   String ansstate) {
-		logger.info("controller - inquiry_list");
-
-		int totalRows = inquiryService.getCount(sid);
-		Pager pager = new Pager(6, 5, totalRows, pageNo);
-		
 		/* 점체답변이면 널이고, 아니면 그 값을 넣어줘야함 */
 		if(ansstate.equals("전체답변")) {
 			ansstate = null;
 		}
-		logger.info("-------------null, 대기중, 답변완료 셋중 하나: " + ansstate);
+		// 전체 답변,답변중, 답변완료 에 따라서 카운트 개수 달라짐 !!! 
+		int totalRows = inquiryService.getCount(sid, ansstate); // 전체 개수 
 		
+		Pager pager = new Pager(6, 5, totalRows, pageNo);
+		logger.info("ansstate: " + ansstate);
 		
 		List<Inquiry> inquirylist = inquiryService.getList(pager, sid, ansstate);
 		Map<String, Object> map = new HashMap<>();
@@ -104,29 +102,29 @@ public class InquiryController {
 	}
 	
 	// 사방 이미지 출력
-	@GetMapping("/sattach/{sabang_id}")
-	public void download(@PathVariable int sabang_id, HttpServletResponse response) {
-		try {
-			Sabang sabang = sabangService.getSabang(sabang_id);
-			String sattachoname = sabang.getSabang_imgoname();
-			if (sattachoname == null)
-				return;
-			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
-			String sattachsname = sabang.getSabang_imgsname();
-			String sattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/" + sattachsname;
-			String sattachtype = sabang.getSabang_imgtype();
-
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
-			response.setContentType(sattachtype);
-
-			InputStream is = new FileInputStream(sattachspath);
-			OutputStream os = response.getOutputStream();
-			FileCopyUtils.copy(is, os);
-			is.close();
-			os.flush();
-			os.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	@GetMapping("/sattach/{sabang_id}")
+//	public void download(@PathVariable int sabang_id, HttpServletResponse response) {
+//		try {
+//			Sabang sabang = sabangService.getSabang(sabang_id);
+//			String sattachoname = sabang.getSabang_imgoname();
+//			if (sattachoname == null)
+//				return;
+//			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
+//			String sattachsname = sabang.getSabang_imgsname();
+//			String sattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/" + sattachsname;
+//			String sattachtype = sabang.getSabang_imgtype();
+//
+//			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
+//			response.setContentType(sattachtype);
+//
+//			InputStream is = new FileInputStream(sattachspath);
+//			OutputStream os = response.getOutputStream();
+//			FileCopyUtils.copy(is, os);
+//			is.close();
+//			os.flush();
+//			os.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

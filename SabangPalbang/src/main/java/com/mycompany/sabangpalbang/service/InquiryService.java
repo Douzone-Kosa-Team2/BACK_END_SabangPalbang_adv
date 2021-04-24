@@ -14,8 +14,8 @@ public class InquiryService {
 	@Autowired
 	private InquiryDao inquiryDao;
 	
-	public int getCount(int sid) {
-		int row = inquiryDao.count(sid);
+	public int getCount(int sid, String ansstate) {
+		int row = inquiryDao.count(sid, ansstate);
 		return row;
 	}
 	
