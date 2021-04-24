@@ -69,14 +69,14 @@ public class ProfitService {
 	public Product getProduct(int product_id) {
 		return productDao.selectByProduct(product_id);
 	}
-	public List<OrderMain> getMonthJanuary() {
-		return orderMainDao.selectByMonthJanuaryBuy();
-	}
+
 
 	
 	//민상 - 주문
 
-
+	public List<OrderMain> getMonthJanuary() {
+		return orderMainDao.selectByMonthJanuaryBuy();
+	}
 
 
 }

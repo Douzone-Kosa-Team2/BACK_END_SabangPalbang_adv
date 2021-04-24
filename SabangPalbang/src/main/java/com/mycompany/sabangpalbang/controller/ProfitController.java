@@ -178,9 +178,9 @@ public class ProfitController {
 		totalprice.add(total);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("month3", month3);
-		map.put("month2", month2);
-		map.put("month1", month1);
+		map.put("month3", month3.size());
+		map.put("month2", month2.size());
+		map.put("month1", month1.size());
 		map.put("totalprice", totalprice);
 		
 		return map;
