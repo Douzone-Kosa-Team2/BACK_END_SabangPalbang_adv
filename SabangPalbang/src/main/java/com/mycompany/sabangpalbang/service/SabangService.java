@@ -20,14 +20,34 @@ public class SabangService {
 	private ProductDao productDao;
 	
 	//사방 게시판
-	public List<Sabang> getList(Pager pager) {
-		return sabangDao.selectByBuy(pager);
-	}
-
+	
 	public int getCount() {
 		return sabangDao.count();
 	}
-
+	
+	public List<Sabang> getSabangList_Buy(Pager pager) {
+		List<Sabang> list = sabangDao.selectByBuy(pager);
+		return list;	
+	}
+	
+	public List<Sabang> getSabangList_Low(Pager pager) {
+		List<Sabang> list = sabangDao.selectByLow(pager);
+		return list;	
+	}
+	
+	public List<Sabang> getSabangList_High(Pager pager) {
+		List<Sabang> list = sabangDao.selectByHigh(pager);
+		return list;	
+	}
+	
+	public List<Sabang> getSabangList_View(Pager pager) {
+		List<Sabang> list = sabangDao.selectByView(pager);
+		return list;	
+	}
+	
+	
+	
+	
 	//사방 안에 상품 출력
 	public Sabang getSabang(int sabang_id) {
 		return sabangDao.selectBySid(sabang_id);

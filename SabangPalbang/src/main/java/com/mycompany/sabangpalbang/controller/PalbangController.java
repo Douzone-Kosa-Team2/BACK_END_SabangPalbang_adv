@@ -38,10 +38,20 @@ public class PalbangController {
 		logger.info("palbang_list");
 		int totalRows = palbangService.getCount();
 		Pager pager = new Pager(6, 5, totalRows, pageNo);
-		List<Palbang> palbangs = palbangService.getList(pager);
+		List<Palbang> palbangLikeList = palbangService.getPalbangList_Like(pager);
+		List<Palbang> palbangViewList = palbangService.getPalbangList_View(pager);
+		List<Palbang> palbangNewList = palbangService.getPalbangList_New(pager);
+		List<Palbang> palbangOldList = palbangService.getPalbangList_Old(pager);
+		
+		
+		
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
-		map.put("palbang", palbangs);
+		map.put("palbangLikeList", palbangLikeList);
+		map.put("palbangViewList", palbangViewList);
+		map.put("palbangNewList", palbangNewList);
+		map.put("palbangOldList", palbangOldList);
 		return map;
 	}
 
