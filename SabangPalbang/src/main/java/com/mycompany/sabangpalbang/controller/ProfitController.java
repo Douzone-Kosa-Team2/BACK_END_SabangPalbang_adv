@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycompany.sabangpalbang.dto.Member;
+import com.mycompany.sabangpalbang.dto.OrderMain;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 import com.mycompany.sabangpalbang.service.ProfitService;
@@ -124,9 +126,25 @@ public class ProfitController {
 	
 	
 	//민상 - 주문 실적
-	@GetMapping("/order")
-	public void test3() {
-		logger.info("test3");
-		
-	}
+//	@GetMapping("/order")
+//	public List<OrderMain> orderperformance() {
+//		logger.info("주문실적");
+//		//List<OrderMain> monthbuy1 = orderService.getMonthJanuary();
+//		List<OrderMain> monthbuy2 = new ArrayList<>();
+//		List<OrderMain> monthbuy3 = new ArrayList<>();
+//		List<OrderMain> monthbuy4 = new ArrayList<>();
+//		
+//		Date datee = new Date();
+//		
+//		
+//		
+//		
+//		
+//		
+//		logger.info("");
+//		logger.info("");
+//		
+//		return monthbuy1;
+//		
+//	}
 }
