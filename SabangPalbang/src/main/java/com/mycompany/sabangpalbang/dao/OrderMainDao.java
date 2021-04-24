@@ -32,6 +32,7 @@ public interface OrderMainDao {
 	public List<OrderMain> selectOrderByPostingList(Pager postingpager);
 	public int postSuccesscount();
 	public List<OrderMain> selectOrderByPostSuccessList(Pager postSuccesspager);
+	public List<OrderMain> selectByMonthJanuaryBuy();
 	
 	
 }

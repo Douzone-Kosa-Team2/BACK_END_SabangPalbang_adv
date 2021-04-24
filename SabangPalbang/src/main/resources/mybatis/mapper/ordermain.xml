@@ -176,4 +176,13 @@
 		
 		where order_id=#{order_id}
 	</update>
+	
+	<select id="selectByMonthJanuaryBuy" resultType="ordermain">
+		select extract(month from order_date) 월, count(*) 판매량
+		from ordermain
+		where extract(month from order_date) = '2'
+		group by extract(month from order_date)
+		order by extract(month from order_date) asc;
+	</select>
+	
 </mapper> 

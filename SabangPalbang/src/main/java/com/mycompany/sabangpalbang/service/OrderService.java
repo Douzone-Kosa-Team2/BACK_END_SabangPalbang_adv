@@ -126,6 +126,10 @@ public class OrderService {
 		return orderMainDao.postSuccesscount();
 	}
 
+	public List<OrderMain> getMonthJanuary() {
+		return orderMainDao.selectByMonthJanuaryBuy();
+	}
+
 	
 
 
