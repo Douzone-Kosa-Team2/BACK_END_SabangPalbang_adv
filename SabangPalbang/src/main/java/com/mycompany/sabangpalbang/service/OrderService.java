@@ -13,7 +13,6 @@ import com.mycompany.sabangpalbang.dao.SabangDao;
 import com.mycompany.sabangpalbang.dto.Member;
 import com.mycompany.sabangpalbang.dto.OrderMain;
 import com.mycompany.sabangpalbang.dto.Order_detail;
-import com.mycompany.sabangpalbang.dto.Ordermonthbuy;
 import com.mycompany.sabangpalbang.dto.Pager;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
@@ -127,9 +126,8 @@ public class OrderService {
 		return orderMainDao.postSuccesscount();
 	}
 
-	public List<OrderMain> getMonthJanuary() {
-		return orderMainDao.selectByMonthJanuaryBuy();
-	}
+	
+	
 
 	
 

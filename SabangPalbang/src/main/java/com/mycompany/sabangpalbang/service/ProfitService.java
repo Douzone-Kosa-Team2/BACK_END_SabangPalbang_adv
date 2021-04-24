@@ -69,14 +69,26 @@ public class ProfitService {
 	public Product getProduct(int product_id) {
 		return productDao.selectByProduct(product_id);
 	}
-
-
+	
 	
 	//민상 - 주문
-
 	public List<OrderMain> getMonthJanuary() {
 		return orderMainDao.selectByMonthJanuaryBuy();
 	}
+	public int getTotalCount() {
+		return orderMainDao.countView();
+	}
 
+	public int getCardPaycount() {
+		return orderMainDao.cardpaycount();
+	}
+	
+	public int getDepositPayCount() {
+		return orderMainDao.depositpaycount();
+	}
+	
+	public int getPhonePayCount() {
+		return orderMainDao.phonepaycount();
+	}
 
 }
