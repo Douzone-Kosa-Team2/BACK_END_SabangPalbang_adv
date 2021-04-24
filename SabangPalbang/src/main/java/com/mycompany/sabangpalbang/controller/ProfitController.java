@@ -15,31 +15,25 @@ public class ProfitController {
 	private static final Logger logger = LoggerFactory.getLogger(ProfitController.class);
 	
 	//채정 - 회원 실적
-	@RequestMapping("/member")
-	public class ProfitMember{
-		@GetMapping("")
-		public void list() {
+	@GetMapping("/member")
+	public void test1() {
+		logger.info("test");
 		
-		}
 	}
 	
 	
 	//종현 - 사방 실적
-	@RequestMapping("/sabang")
-	public class ProfitSabang{
-		@GetMapping("")
-		public void list() {
+	@GetMapping("/sabang")
+	public void test2() {
+		logger.info("test2");
 		
-		}
 	}
 	
 	
 	//민상 - 주문 실적
-	@RequestMapping("/order")
-	public class ProfitOrder{
-		@GetMapping("")
-		public void list() {
+	@GetMapping("/order")
+	public void test3() {
+		logger.info("test3");
 		
-		}
 	}
 }
