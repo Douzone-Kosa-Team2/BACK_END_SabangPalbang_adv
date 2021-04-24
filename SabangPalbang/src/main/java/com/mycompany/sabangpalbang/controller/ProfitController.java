@@ -3,8 +3,9 @@ package com.mycompany.sabangpalbang.controller;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,6 @@ import com.mycompany.sabangpalbang.dto.OrderMain;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 import com.mycompany.sabangpalbang.service.ProfitService;
-
 @RestController
 @RequestMapping("/profit_m")
 public class ProfitController {
@@ -132,25 +132,58 @@ public class ProfitController {
 	
 	
 	//민상 - 주문 실적
-//	@GetMapping("/order")
-//	public List<OrderMain> orderperformance() {
-//		logger.info("주문실적");
-//		//List<OrderMain> monthbuy1 = orderService.getMonthJanuary();
-//		List<OrderMain> monthbuy2 = new ArrayList<>();
-//		List<OrderMain> monthbuy3 = new ArrayList<>();
-//		List<OrderMain> monthbuy4 = new ArrayList<>();
-//		
-//		Date datee = new Date();
-//		
-//		
-//		
-//		
-//		
-//		
-//		logger.info("");
-//		logger.info("");
-//		
-//		return monthbuy1;
-//		
-//	}
+	@GetMapping("/order")
+	public Map<String, Object> orderperformance() {
+		logger.info("주문실적");
+		Calendar cal = Calendar.getInstance();
+		int mmonth = (Calendar.MONTH) + 1;
+		
+		List<OrderMain> totalmonth = profitService.getMonthJanuary();
+		List<OrderMain> month3 = new ArrayList<>();
+		List<OrderMain> month2 = new ArrayList<>();
+		List<OrderMain> month1 = new ArrayList<>();
+		List<Integer> totalprice = new ArrayList<>();
+		
+		for(int i=0; i<totalmonth.size(); i++) {
+			if((mmonth) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
+				month3.add(totalmonth.get(i));
+				
+			}
+			else if((mmonth-1) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
+				
+				month2.add(totalmonth.get(i));
+				
+			}
+			else {
+				month1.add(totalmonth.get(i));
+			}
+		}
+		
+		
+		int total = 0;
+		
+		for(int i=0; i<month3.size(); i++) {
+			total += month3.get(i).getOrder_price();
+		}
+		totalprice.add(total);
+		total=0;
+		for(int i=0; i<month2.size(); i++) {
+			total += month2.get(i).getOrder_price();
+		}
+		totalprice.add(total);
+		total=0;
+		for(int i=0; i<month1.size(); i++) {
+			total += month1.get(i).getOrder_price();
+		}
+		totalprice.add(total);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("month3", month3);
+		map.put("month2", month2);
+		map.put("month1", month1);
+		map.put("totalprice", totalprice);
+		
+		return map;
+		
+	}
 }

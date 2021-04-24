@@ -13,6 +13,7 @@ import com.mycompany.sabangpalbang.dao.PalbangDetailDao;
 import com.mycompany.sabangpalbang.dao.ProductDao;
 import com.mycompany.sabangpalbang.dao.SabangDao;
 import com.mycompany.sabangpalbang.dto.Member;
+import com.mycompany.sabangpalbang.dto.OrderMain;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 
@@ -67,6 +68,9 @@ public class ProfitService {
 	}
 	public Product getProduct(int product_id) {
 		return productDao.selectByProduct(product_id);
+	}
+	public List<OrderMain> getMonthJanuary() {
+		return orderMainDao.selectByMonthJanuaryBuy();
 	}
 
 	
