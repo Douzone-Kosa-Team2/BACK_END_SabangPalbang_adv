@@ -40,7 +40,7 @@ public class InquiryController {
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
 		int totalRows = sabangService.getCount();
 		Pager pager = new Pager(5, 5, totalRows, pageNo);
-		List<Sabang> sabangs = sabangService.getList(pager);
+		List<Sabang> sabangs = sabangService.getSabangList_Buy(pager);
 		
 		for(int i=0; i<sabangs.size(); i++) {
 			int sid = sabangs.get(i).getSabang_id();
