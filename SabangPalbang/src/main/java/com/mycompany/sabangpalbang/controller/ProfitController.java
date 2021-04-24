@@ -41,12 +41,6 @@ public class ProfitController {
 		List<Member> vipMembers = profitService.getVipMembers(); // 우수 고객 top5 (주문 횟수 기준)
 		List<Member> influencers = profitService.getInfluencers(); // 인플루언서 고객 top5 (팔방 작성 횟수 기준)
 		
-		logger.info("" + totalMemberNum);
-		logger.info("" + recentJoinNum);
-		logger.info("" + buyMemberNum);
-		// 멤버 객체로 넘기는거 ㄴelect 문에  컬럼 멤버 정ㅈ보 추가하기 
-		
-		
 		Map<String, Object> map = new HashMap<>();
 		map.put("totalMemberNum", totalMemberNum);
 		map.put("recentJoinNum", recentJoinNum);
