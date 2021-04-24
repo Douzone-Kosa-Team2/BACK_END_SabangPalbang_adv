@@ -3,6 +3,8 @@ package com.mycompany.sabangpalbang.controller;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,13 +117,24 @@ public class ProfitController {
 	
 	//민상 - 주문 실적
 	@GetMapping("/order")
-	public Map<String, Object> orderperformance() {
+	public List<OrderMain> orderperformance() {
 		logger.info("주문실적");
 		List<OrderMain> monthbuy1 = orderService.getMonthJanuary();
+		List<OrderMain> monthbuy2 = new ArrayList<>();
+		List<OrderMain> monthbuy3 = new ArrayList<>();
+		List<OrderMain> monthbuy4 = new ArrayList<>();
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("monthbuy1", monthbuy1);
-		return map;
+		Date datee = new Date();
+		
+		
+		
+		
+		
+		
+		logger.info("");
+		logger.info("");
+		
+		return monthbuy1;
 		
 	}
 }

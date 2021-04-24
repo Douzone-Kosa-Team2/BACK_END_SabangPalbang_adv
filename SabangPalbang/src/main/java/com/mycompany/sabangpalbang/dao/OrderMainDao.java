@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mycompany.sabangpalbang.dto.OrderMain;
+import com.mycompany.sabangpalbang.dto.Ordermonthbuy;
 import com.mycompany.sabangpalbang.dto.Pager;
 import com.mycompany.sabangpalbang.dto.Sabang;
 

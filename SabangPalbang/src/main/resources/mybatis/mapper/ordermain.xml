@@ -178,11 +178,12 @@
 	</update>
 	
 	<select id="selectByMonthJanuaryBuy" resultType="ordermain">
-		select extract(month from order_date) 월, count(*) 판매량
+		select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode 
 		from ordermain
-		where extract(month from order_date) = '2'
-		group by extract(month from order_date)
-		order by extract(month from order_date) asc;
+		where order_date > (
+	    SELECT ADD_MONTHS(TO_DATE(SYSDATE,'YYYY-MM-DD'),-3) 
+	    FROM DUAL
+	    )
 	</select>
 	
 </mapper> 
