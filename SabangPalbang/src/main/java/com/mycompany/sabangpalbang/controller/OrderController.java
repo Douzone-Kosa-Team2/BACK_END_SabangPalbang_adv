@@ -47,29 +47,29 @@ public class OrderController {
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo){
 		logger.info("order_list");
 		int totalRows = orderService.getCount();
-		Pager pager = new Pager(6, 5, totalRows, pageNo);
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
 		List<OrderMain> orders = orderService.getList(pager);
 		List<OrderMain> dateUpList = orderService.getDateUpList(pager); //오래된 순 
 		List<OrderMain> dateDownList = orderService.getDateDownList(pager); //최신 순
 		
 		int waitForPayRows = orderService.getWaitForPayCount();//결제대기중
-		Pager waitForPaypager = new Pager(6, 5, waitForPayRows, pageNo);
+		Pager waitForPaypager = new Pager(10, 5, waitForPayRows, pageNo);
 		List<OrderMain> waitForPayList = orderService.getWaitForPayList(waitForPaypager);
 		
 		int paySuccessRows = orderService.getPaySuccessCount();//결제완료
-		Pager paySuccesspager = new Pager(6, 5, paySuccessRows, pageNo);
+		Pager paySuccesspager = new Pager(10, 5, paySuccessRows, pageNo);
 		List<OrderMain> paySuccessList = orderService.getPaySuccessList(paySuccesspager);
 		
 		int postReadyRows = orderService.getPostReadyCount();//배송준비중
-		Pager postReadypager = new Pager(6, 5, postReadyRows, pageNo);
+		Pager postReadypager = new Pager(10, 5, postReadyRows, pageNo);
 		List<OrderMain> postReadyList = orderService.getPostReadyList(postReadypager);
 		
 		int postingRows = orderService.getPostingCount();//배송중
-		Pager postingpager = new Pager(6, 5, postingRows, pageNo);
+		Pager postingpager = new Pager(10, 5, postingRows, pageNo);
 		List<OrderMain> postingList = orderService.getPostingList(postingpager);
 		
 		int postSuccessRows = orderService.getPostSuccessCount();//배송완료
-		Pager postSuccesspager = new Pager(6, 5, postSuccessRows, pageNo);
+		Pager postSuccesspager = new Pager(10, 5, postSuccessRows, pageNo);
 		List<OrderMain> postSuccessList = orderService.getPostSuccessList(postSuccesspager);
 		
 		Map<String, Object> map = new HashMap<>();

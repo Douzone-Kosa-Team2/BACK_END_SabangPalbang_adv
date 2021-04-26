@@ -71,58 +71,58 @@ public class ProfitController {
 	}
 	
 	// 사방 이미지 출력
-//	@GetMapping("/sabang/sattach/{sabang_id}")
-//	public void sabangImg(@PathVariable int sabang_id, HttpServletResponse response) {
-//		try {
-//			Sabang sabang = profitService.getSabang(sabang_id);
-//			String sattachoname = sabang.getSabang_imgoname();
-//			if (sattachoname == null)
-//				return;
-//			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
-//			String sattachsname = sabang.getSabang_imgsname();
-//			String sattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/" + sattachsname;
-//			String sattachtype = sabang.getSabang_imgtype();
-//
-//			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
-//			response.setContentType(sattachtype);
-//
-//			InputStream is = new FileInputStream(sattachspath);
-//			OutputStream os = response.getOutputStream();
-//			FileCopyUtils.copy(is, os);
-//			is.close();
-//			os.flush();
-//			os.close();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	@GetMapping("/sabang/sattach/{sabang_id}")
+	public void sabangImg(@PathVariable int sabang_id, HttpServletResponse response) {
+		try {
+			Sabang sabang = profitService.getSabang(sabang_id);
+			String sattachoname = sabang.getSabang_imgoname();
+			if (sattachoname == null)
+				return;
+			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String sattachsname = sabang.getSabang_imgsname();
+			String sattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_post/" + sattachsname;
+			String sattachtype = sabang.getSabang_imgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
+			response.setContentType(sattachtype);
+
+			InputStream is = new FileInputStream(sattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	// 상품 이미지 출력
-//	@GetMapping("/sabang/pattach/{product_id}")
-//	public void downloadProduct(@PathVariable int product_id, HttpServletResponse response) {
-//		try {
-//			Product product = profitService.getProduct(product_id);
-//			String pattachoname = product.getProduct_imgoname();
-//			if (pattachoname == null)
-//				return;
-//			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
-//			String pattachsname = product.getProduct_imgsname();
-//			String pattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_detail/" + pattachsname;
-//			String pattachtype = product.getProduct_imgtype();
-//
-//			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
-//			response.setContentType(pattachtype);
-//
-//			InputStream is = new FileInputStream(pattachspath);
-//			OutputStream os = response.getOutputStream();
-//			FileCopyUtils.copy(is, os);
-//			is.close();
-//			os.flush();
-//			os.close();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	@GetMapping("/sabang/pattach/{product_id}")
+	public void downloadProduct(@PathVariable int product_id, HttpServletResponse response) {
+		try {
+			Product product = profitService.getProduct(product_id);
+			String pattachoname = product.getProduct_imgoname();
+			if (pattachoname == null)
+				return;
+			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String pattachsname = product.getProduct_imgsname();
+			String pattachspath = "C:/Users/ant94/git/SabangPalbang_upload/images/sabang_detail/" + pattachsname;
+			String pattachtype = product.getProduct_imgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
+			response.setContentType(pattachtype);
+
+			InputStream is = new FileInputStream(pattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	//민상 - 주문 실적
