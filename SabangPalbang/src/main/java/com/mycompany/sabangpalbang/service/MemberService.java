@@ -1,6 +1,7 @@
 package com.mycompany.sabangpalbang.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +32,31 @@ public class MemberService {
 		
 	}
 
-	public List<Member> getMemberBySearch(String target) {
-		// 숫자인지 문자열인지 판별해서 다른 dao로 요청하기 
-		char tmp;
-		boolean output = true; //숫자 
-		for(int i=0; i< target.length(); i++) {
-			tmp = target.charAt(i);
-			if(Character.isDigit(tmp) == false) {
-				output = false; // 문자열이다 
-			}
-		}
+	// 아이디 검색 
+	public int getCountByID(int target) {
+		return memberDao.countByID(target);
+	}
+	public List<Member> getMemberById(Pager pager, int target) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pager", pager);
+		map.put("member_id", target);
+		
 		List<Member> members = new ArrayList<>();
-		// 숫자이면 
-		if(output) {
-			members = memberDao.selectMemberById(Integer.parseInt(target));
-		}else {
-			members = memberDao.selectMemberByName(target);
-		}
+		members = memberDao.selectMemberById(map);
+		return members;
+	}
+
+	// 이름 검색 
+	public int getCountByName(String target) {
+		return memberDao.countByName(target);
+	}
+	public List<Member> getMemberByName(Pager pager, String target) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pager", pager);
+		map.put("member_name", target);
+		
+		List<Member> members = new ArrayList<>();
+		members = memberDao.selectMemberByName(map);
 		return members;
 	}
 

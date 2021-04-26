@@ -29,7 +29,7 @@ public class MemberController {
 	@GetMapping("")
 	public Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo) {
 		int totalRows = memberService.getCount();
-		Pager pager = new Pager(6, 5, totalRows, pageNo);
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
 		List<Member> members = memberService.getList(pager);
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
@@ -42,13 +42,28 @@ public class MemberController {
 	public void delete(@PathVariable int member_id) {
 		memberService.deleteMember(member_id);
 	}
-	
-	// 회원 조회 : 아이디(int) 또는 이름(string)
-	@GetMapping("/search/{target}")
-	public List<Member> searchMember(@PathVariable String target) {
-		List<Member> members = memberService.getMemberBySearch(target);
-		logger.info("mem size : " + members.size());
-		return members;
+
+	// 회원 조회 : 아이디(int) 
+	@GetMapping("/id/{target}")
+	public Map<String, Object> searchMember(@RequestParam(defaultValue = "1") int pageNo, @PathVariable int target) {
+		int totalRows = memberService.getCountByID(target); // 아이디 조회
+		Map<String, Object> map = new HashMap<>();
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
+		List<Member> members = memberService.getMemberById(pager, target);
+		map.put("pager", pager);
+		map.put("members", members);
+		return map;
 	}
-	
+
+	// 회원 조회 : 이름(string)
+	@GetMapping("/name/{target}")
+	public Map<String, Object> searchMember2(@RequestParam(defaultValue = "1") int pageNo, @PathVariable String target) {
+		int totalRows = memberService.getCountByName(target); //  이름 조회 따로 카운트 가져오기
+		Map<String, Object> map = new HashMap<>();
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
+		List<Member> members = memberService.getMemberByName(pager, target);
+		map.put("pager", pager);
+		map.put("members", members);
+		return map;
+	}
 }
