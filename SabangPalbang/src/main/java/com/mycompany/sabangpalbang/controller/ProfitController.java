@@ -144,16 +144,16 @@ public class ProfitController {
 		
 		
 		for(int i=0; i<totalmonth.size(); i++) {
-			if((month) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
+			if((month+1) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
 				month3.add(totalmonth.get(i));
 				
 			}
-			else if((month-1) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
+			else if((month) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
 				
 				month2.add(totalmonth.get(i));
 				
 			}
-			else {
+			else if((month-1) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
 				month1.add(totalmonth.get(i));
 			}
 		}
