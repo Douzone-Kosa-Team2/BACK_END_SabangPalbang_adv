@@ -199,7 +199,7 @@
 		select order_id, order_memberid, order_phone, order_zipcode, order_roadaddress, order_detailaddress, order_sabangid, order_price, order_date , order_state, order_payment, order_bankcode 
 		from ordermain
 		where order_date > (
-	    SELECT ADD_MONTHS(TO_DATE(SYSDATE,'YYYY-MM-DD'),-3) 
+	    SELECT ADD_MONTHS(TO_DATE(SYSDATE,'YYYY-MM-DD'),-2) 
 	    FROM DUAL
 	    )
 	</select>

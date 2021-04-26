@@ -16,7 +16,6 @@ public interface ProductDao {
 	public List<Product> selectAll(int sabang_id);
 	public Product selectCartByProductId(int product_id);
 	public int updateBuyCount(int product_id);
-	public Product selectAllProduct(int product_id);
 	int insertProduct(Product product);
 	int updateProduct(Product product);
 	int deleteProduct(int product_id);

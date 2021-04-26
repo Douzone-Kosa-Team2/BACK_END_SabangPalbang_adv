@@ -221,11 +221,14 @@ public class SabangController {
 				e.printStackTrace();
 			}
 		}
+		//상품 등록
 		sabangService.insertProduct(product);
-		product.setPattach(null);
-		//int sabang_id = product.getSabang_id();
 		
-		logger.info(""+product.getSabang_id());
+		//사방 가격 갱신	
+		sabangService.updatePrice(product);
+
+		product.setPattach(null);
+		
 		return product;
 	}
 	
@@ -234,14 +237,6 @@ public class SabangController {
 
 	@PutMapping("/detail")
 	public Product updateProduct(Product product) {
-//			logger.info(""+product.getProduct_id());
-//			logger.info(product.getProduct_name());
-//			logger.info(""+product.getSabang_id());
-//			logger.info(""+product.getProduct_price());
-//			logger.info(""+product.getProduct_buycount());
-//			logger.info(""+product.getProduct_explain1());
-//			logger.info(""+product.getProduct_explain2());
-//			logger.info(""+product.getPattach());
 
 		if (product.getPattach() != null && !product.getPattach().isEmpty()) {
 			MultipartFile mf = product.getPattach();
@@ -256,6 +251,19 @@ public class SabangController {
 				e.printStackTrace();
 			}
 		}
+		//상품 원래 가격 가져오기
+		logger.info("신규 가격: " + product.getProduct_price());
+		
+		Product original_product = sabangService.getProduct(product.getProduct_id());
+		logger.info("원래 가격: " + original_product.getProduct_price());
+	
+		logger.info("새로운가격-원래가격:" + (product.getProduct_price()-original_product.getProduct_price()));
+		
+		//사방 가격 갱신
+		original_product.setProduct_price(product.getProduct_price()-original_product.getProduct_price());
+		sabangService.updatePrice(original_product);
+		
+		//상품 업데이트
 		sabangService.updateProduct(product);
 		product.setPattach(null);
 		return product;
@@ -263,9 +271,17 @@ public class SabangController {
 	// 상품 삭제
 	@DeleteMapping("/detail/{product_id}")
 	public Product deleteProduct(@PathVariable int product_id) {
-		Product product = sabangService.getSabangId(product_id);
-		int sabang_id = product.getSabang_id();
-		logger.info(""+sabang_id);
+		Product product = sabangService.getProduct(product_id);
+		
+		//사방 가격 갱신
+		logger.info("Before: "+product.getProduct_price());
+		product.setProduct_price(-product.getProduct_price());
+		logger.info("After: "+product.getProduct_price());
+		
+		sabangService.updatePrice(product);
+		
+
+		//상품 삭제
 		sabangService.deleteProduct(product_id);
 		
 		return product;
