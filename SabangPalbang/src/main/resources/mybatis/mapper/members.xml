@@ -3,6 +3,15 @@
 
 <mapper namespace="com.mycompany.sabangpalbang.dao.MemberDao">
 	<!-- 회원 조회 : 아이디 또는 이름  -->
+	<select id="selectByMember" resultType="member">
+		select member_id, member_email, member_name,
+		member_phone,
+		member_nickname,
+		join_date, member_authority
+		from member
+		where member_id=#{member_id}
+	</select>
+	
 	<select id="selectMemberById" parameterType="hashmap" resultType="member">
 		select rnum, member_id, member_email, member_name,
 		member_phone,
