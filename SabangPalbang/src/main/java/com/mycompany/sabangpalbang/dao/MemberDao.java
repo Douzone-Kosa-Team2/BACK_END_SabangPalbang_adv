@@ -1,9 +1,9 @@
 package com.mycompany.sabangpalbang.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.sabangpalbang.dto.Member;
 import com.mycompany.sabangpalbang.dto.Pager;
@@ -11,9 +11,10 @@ import com.mycompany.sabangpalbang.dto.Pager;
 @Mapper
 public interface MemberDao {
 	// 회원 조회 
-	public List<Member> selectMemberByName(String member_name);
-	public List<Member> selectMemberById(int member_id);
-	
+	public List<Member> selectMemberByName(HashMap<String, Object> map);
+	public List<Member> selectMemberById(HashMap<String, Object> map);
+	public int countByID(int member_id);
+	public int countByName(String member_name);
 	
 	public Member selectByPayMember(String member_email);
 	public String deleteByMember(String member_email);
@@ -36,4 +37,5 @@ public interface MemberDao {
 	public int selectBuyMemCount();
 	public List<Member> selectVipMemers();
 	public List<Member> selectInfluencers();
+	
 }

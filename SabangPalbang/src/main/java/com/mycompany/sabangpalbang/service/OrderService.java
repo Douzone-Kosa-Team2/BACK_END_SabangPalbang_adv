@@ -63,7 +63,7 @@ public class OrderService {
 	}
 
 	public Product getProduct(int product_id) {
-		Product product = productDao.selectAllProduct(product_id);
+		Product product = productDao.selectByProduct(product_id);
 		return product;
 	}
 

@@ -86,13 +86,13 @@ public class SabangService {
 		return productDao.deleteProduct(product_id);				
 	}
 
-	public Product getSabangId(int product_id) {
-		Product result = productDao.selectAllProduct(product_id);
-		return result;
-	}
-
 	public Product getProduct(int product_id) {
 		return productDao.selectByProduct(product_id);
+	}
+
+	//상품 추가 삭제시 가격 변경
+	public int updatePrice(Product product) {
+		return sabangDao.updatePrice(product);
 	}
 
 	public int getSabangSaleingCount() {

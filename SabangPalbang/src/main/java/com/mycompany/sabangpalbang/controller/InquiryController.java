@@ -98,7 +98,7 @@ public class InquiryController {
 		}
 		// 전체 답변,답변중, 답변완료 에 따라서 카운트 개수 달라짐 !!! 
 		int totalRows = inquiryService.getCount(sid, ansstate); // 전체 개수 
-		Pager pager = new Pager(6, 5, totalRows, pageNo);
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
 		List<Inquiry> inquirylist = inquiryService.getList(pager, sid, ansstate);
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);

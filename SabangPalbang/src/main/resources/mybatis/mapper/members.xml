@@ -3,18 +3,50 @@
 
 <mapper namespace="com.mycompany.sabangpalbang.dao.MemberDao">
 	<!-- 회원 조회 : 아이디 또는 이름  -->
-	<select id="selectMemberById" parameterType="int" resultType="member">
-		select member_id, member_email, member_name, member_phone,
-				member_nickname, join_date, member_authority
+	<select id="selectMemberById" parameterType="hashmap" resultType="member">
+		select rnum, member_id, member_email, member_name,
+		member_phone,
+		member_nickname, join_date, member_authority
+		from (
+		select rownum as rnum, member_id, member_email, member_name,
+		member_phone,
+		member_nickname, join_date, member_authority
+		from (
+		select member_id, member_email, member_name,
+		member_phone,
+		member_nickname,
+		join_date, member_authority
 		from member
-		where member_id=#{member_id}
+		where member_authority='ROLE_MEMBER' and member_id=#{member_id}
+		order by member_name
+
+		)
+		where rownum &lt;= #{pager.endRowNo}
+		)
+		where rnum &gt;= #{pager.startRowNo}
 	</select>
 	
-	<select id="selectMemberByName" parameterType="string" resultType="member">
-		select member_id, member_email, member_name, member_phone,
-				member_nickname, join_date, member_authority
+	<select id="selectMemberByName" parameterType="hashmap" resultType="member">
+		select rnum, member_id, member_email, member_name,
+		member_phone,
+		member_nickname, join_date, member_authority
+		from (
+		select rownum as rnum, member_id, member_email, member_name,
+		member_phone,
+		member_nickname, join_date, member_authority
+		from (
+		select member_id, member_email, member_name,
+		member_phone,
+		member_nickname,
+		join_date, member_authority
 		from member
-		where member_name=#{member_name}
+		where member_authority='ROLE_MEMBER' and  member_name=#{member_name}
+		order by member_name
+
+		)
+		where rownum &lt;= #{pager.endRowNo}
+		)
+		where rnum &gt;= #{pager.startRowNo}
 	</select>
 
 	<select id="selectMember" parameterType="pager"
@@ -43,6 +75,16 @@
 
 	<select id="count" resultType="int">
 		select count(*) from member where member_authority='ROLE_MEMBER'
+	</select>
+	
+	<select id="countByID" resultType="int">
+		select count(*) from member where member_authority='ROLE_MEMBER'
+		and member_id = #{member_id}
+	</select>
+	
+	<select id="countByName" resultType="int">
+		select count(*) from member where member_authority='ROLE_MEMBER'
+		and member_name = #{member_name}
 	</select>
 	
 	<delete id="deleteMember" parameterType="int">
