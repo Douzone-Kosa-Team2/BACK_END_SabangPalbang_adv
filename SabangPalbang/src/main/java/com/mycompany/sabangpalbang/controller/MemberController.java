@@ -41,7 +41,7 @@ public class MemberController {
 	@DeleteMapping("/{member_id}")
 	public void delete(@PathVariable int member_id) {
 		memberService.deleteMember(member_id);
-	}
+	} 
 
 	// 회원 조회 : 아이디(int) 
 	@GetMapping("/id/{target}")
