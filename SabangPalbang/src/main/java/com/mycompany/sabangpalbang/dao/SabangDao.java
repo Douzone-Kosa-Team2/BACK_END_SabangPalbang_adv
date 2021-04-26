@@ -30,5 +30,11 @@ public interface SabangDao {
 	int insert(Sabang sabang);
 	int update(Sabang sabang);
 	public Sabang selectBestSabang();
+	public int saleingcount();
+	public List<Sabang> selectBySaleingList(Pager sabangSaleingPager);
+	public int salereadycount();
+	public List<Sabang> selectBySaleReadyList(Pager sabangSaleReadyPager);
+	public int salestopcount();
+	public List<Sabang> selectBySaleStopList(Pager sabangSaleStopPager);
 	
 }

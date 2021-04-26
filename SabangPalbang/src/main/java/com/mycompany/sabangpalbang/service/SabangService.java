@@ -95,4 +95,28 @@ public class SabangService {
 		return productDao.selectByProduct(product_id);
 	}
 
+	public int getSabangSaleingCount() {
+		return sabangDao.saleingcount();
+	}
+
+	public List<Sabang> getSabangSaleingList(Pager sabangSaleingPager) {
+		return sabangDao.selectBySaleingList(sabangSaleingPager);
+	}
+
+	public int getSabangSaleReadyCount() {
+		return sabangDao.salereadycount();
+	}
+
+	public List<Sabang> getSabangSaleReadyList(Pager sabangSaleReadyPager) {
+		return sabangDao.selectBySaleReadyList(sabangSaleReadyPager);
+	}
+
+	public int getSabangSaleStopCount() {
+		return sabangDao.salestopcount();
+	}
+
+	public List<Sabang> getSabangSaleStopList(Pager sabangSaleStopPager) {
+		return sabangDao.selectBySaleStopList(sabangSaleStopPager);
+	}
+
 }

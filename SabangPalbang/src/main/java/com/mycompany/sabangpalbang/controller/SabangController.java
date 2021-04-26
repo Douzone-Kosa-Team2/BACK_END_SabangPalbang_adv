@@ -49,8 +49,18 @@ public class SabangController {
 		List<Sabang> sabangHighList = sabangService.getSabangList_High(pager);
 		List<Sabang> sabangLowList = sabangService.getSabangList_Low(pager);
 		
+		//재고상태
+		int sabangSaleingRows = sabangService.getSabangSaleingCount();//판매중
+		Pager sabangSaleingPager = new Pager(6, 5, sabangSaleingRows, pageNo);
+		List<Sabang> sabangSaleingList = sabangService.getSabangSaleingList(sabangSaleingPager);
 		
+		int sabangSaleReadyRows = sabangService.getSabangSaleReadyCount();//판매준비중
+		Pager sabangSaleReadyPager = new Pager(6, 5, sabangSaleReadyRows, pageNo);
+		List<Sabang> sabangSaleReadyList = sabangService.getSabangSaleReadyList(sabangSaleReadyPager);
 		
+		int sabangSaleStopRows = sabangService.getSabangSaleStopCount();//판매중지
+		Pager sabangSaleStopPager = new Pager(6, 5, sabangSaleStopRows, pageNo);
+		List<Sabang> sabangSaleStopList = sabangService.getSabangSaleStopList(sabangSaleStopPager);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
@@ -58,6 +68,12 @@ public class SabangController {
 		map.put("sabangViewList", sabangViewList);
 		map.put("sabangHighList", sabangHighList);
 		map.put("sabangLowList", sabangLowList);
+		map.put("sabangSaleingPager", sabangSaleingPager);
+		map.put("sabangSaleingList", sabangSaleingList);
+		map.put("sabangSaleReadyPager", sabangSaleReadyPager);
+		map.put("sabangSaleReadyList", sabangSaleReadyList);
+		map.put("sabangSaleStopPager", sabangSaleStopPager);
+		map.put("sabangSaleStopList", sabangSaleStopList);
 		return map;
 	}
 

@@ -132,14 +132,15 @@ public class ProfitController {
 		int month = (Calendar.MONTH) + 1;
 
 		//모든 날의 order정보와 최근 3달 order정보
-		List<OrderMain> totalmonth = profitService.getMonthJanuary();
+		List<OrderMain> totalmonth = profitService.getMonthJanuary();//현재 월 -3 까지의 월들의 주문 정보들
+		
 		List<OrderMain> month3 = new ArrayList<>();
 		List<OrderMain> month2 = new ArrayList<>();
-		List<OrderMain> month1 = new ArrayList<>();
+		List<OrderMain> month1 = new ArrayList<>();	//-3 ~ -1 월의 주문 정보들을 각각 저장하려 할 때
 		
 		List<Integer> totalprice3 = new ArrayList<>();
 		List<Integer> totalprice2 = new ArrayList<>();
-		List<Integer> totalprice1 = new ArrayList<>();
+		List<Integer> totalprice1 = new ArrayList<>(); //각 월의 총 주문금액들을 담을 List 
 		
 		
 		for(int i=0; i<totalmonth.size(); i++) {

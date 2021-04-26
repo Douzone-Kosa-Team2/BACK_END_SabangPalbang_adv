@@ -233,5 +233,86 @@
 			)
 		where rownum &lt;= 1
 	</select>
-
+	
+	
+	<!-- 판매중 리스트 -->
+	<select id="saleingcount" resultType="int">
+      	select count(*)
+		from sabang
+		where sabang_state='판매중'
+    </select>
+	
+	<select id="selectBySaleingList" parameterType="pager" resultType="sabang">		
+		select rnum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+		from (
+			select rownum as rnum, sabang_id, sabang_name, sabang_price,
+			sabang_saleprice, sabang_buycount, sabang_viewcount,
+			sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+			from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+				from sabang
+				where sabang_state='판매중'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<!-- 판매준비중 리스트 -->
+	<select id="salereadycount" resultType="int">
+      	select count(*)
+		from sabang
+		where sabang_state='판매준비중'
+    </select>
+	
+	<select id="selectBySaleReadyList" parameterType="pager" resultType="sabang">		
+		select rnum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+		from (
+			select rownum as rnum, sabang_id, sabang_name, sabang_price,
+			sabang_saleprice, sabang_buycount, sabang_viewcount,
+			sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+			from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+				from sabang
+				where sabang_state='판매준비중'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<!-- 판매중지 리스트 -->
+	<select id="salestopcount" resultType="int">
+      	select count(*)
+		from sabang
+		where sabang_state='판매중지'
+    </select>
+	
+	<select id="selectBySaleStopList" parameterType="pager" resultType="sabang">		
+		select rnum, sabang_id, sabang_name, sabang_price,
+		sabang_saleprice, sabang_buycount, sabang_viewcount,
+		sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+		from (
+			select rownum as rnum, sabang_id, sabang_name, sabang_price,
+			sabang_saleprice, sabang_buycount, sabang_viewcount,
+			sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+			from (
+				select sabang_id, sabang_name, sabang_price,
+				sabang_saleprice, sabang_buycount, sabang_viewcount,
+				sabang_imgoname, sabang_imgsname, sabang_imgtype, sabang_state	
+				from sabang
+				where sabang_state='판매중지'
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
 </mapper>
