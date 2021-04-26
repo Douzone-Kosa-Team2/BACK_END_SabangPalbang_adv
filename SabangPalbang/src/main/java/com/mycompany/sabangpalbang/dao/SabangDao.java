@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mycompany.sabangpalbang.dto.Pager;
+import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 
 @Mapper
@@ -30,5 +31,6 @@ public interface SabangDao {
 	int insert(Sabang sabang);
 	int update(Sabang sabang);
 	public Sabang selectBestSabang();
+	public int updatePrice(Product product);
 	
 }

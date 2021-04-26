@@ -233,5 +233,13 @@
 			)
 		where rownum &lt;= 1
 	</select>
+	
+	<update id="updatePrice"  parameterType="palbang">
+		update sabang set
+		sabang_price=sabang_price + #{product_price},
+		sabang_saleprice=sabang_saleprice + #{product_price}
+		where sabang_id=#{sabang_id}
+	</update>
+	
 
 </mapper>
