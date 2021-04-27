@@ -29,7 +29,8 @@ import com.mycompany.sabangpalbang.service.SabangService;
 @RequestMapping("/inquiry_m")
 public class InquiryController {
 	private static final Logger logger = LoggerFactory.getLogger(PalbangController.class);
-	private String IMG_URL = "/Users/homecj/Pictures/SabangPalbang_upload/images/";
+	
+	private String IMG_URL = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//이종현
 	private String IMG_URL_hyun = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//조민상

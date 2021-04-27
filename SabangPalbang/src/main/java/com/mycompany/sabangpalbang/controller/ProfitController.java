@@ -3,7 +3,6 @@ package com.mycompany.sabangpalbang.controller;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mycompany.sabangpalbang.dto.Member;
 import com.mycompany.sabangpalbang.dto.OrderMain;
+import com.mycompany.sabangpalbang.dto.Palbang;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 import com.mycompany.sabangpalbang.service.ProfitService;
@@ -31,7 +31,7 @@ import com.mycompany.sabangpalbang.service.ProfitService;
 public class ProfitController {
 	private static final Logger logger = LoggerFactory.getLogger(ProfitController.class);
 	
-	private String IMG_URL = "/Users/homecj/Pictures/SabangPalbang_upload/images/";
+	private String IMG_URL = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//이종현
 	private String IMG_URL_hyun = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//조민상
@@ -69,13 +69,13 @@ public class ProfitController {
 		
 		Sabang sabang = profitService.getBestSabang();
 		Product product = profitService.getBestProduct();
+		Palbang palbang = profitService.getBestPalbang();
 				
-		//logger.info(""+sabang);
-		//logger.info(""+product);
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("BestSabang", sabang);
 		map.put("BestProduct", product);
+		map.put("BestPalbang", palbang);
 		return map;
 	}
 	
@@ -106,9 +106,35 @@ public class ProfitController {
 		}
 	}
 	
+	// 팔방 이미지 출력
+	@GetMapping("/sabang/palattach/{palbang_id}")
+	public void downloadProduct(@PathVariable int palbang_id, HttpServletResponse response) {
+		try {
+			Palbang palbang = profitService.getPalbang(palbang_id);
+			String pattachoname = palbang.getPalbang_imgoname();
+			if (pattachoname == null)
+				return;
+			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
+			String pattachsname = palbang.getPalbang_imgsname();
+			String pattachspath = IMG_URL + "palbang_post/" + pattachsname;
+			String pattachtype = palbang.getPalbang_imgtype();
+
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
+			response.setContentType(pattachtype);
+
+			InputStream is = new FileInputStream(pattachspath);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			is.close();
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	// 상품 이미지 출력
 	@GetMapping("/sabang/pattach/{product_id}")
-	public void downloadProduct(@PathVariable int product_id, HttpServletResponse response) {
+	public void downloadPalbang(@PathVariable int product_id, HttpServletResponse response) {
 		try {
 			Product product = profitService.getProduct(product_id);
 			String pattachoname = product.getProduct_imgoname();
