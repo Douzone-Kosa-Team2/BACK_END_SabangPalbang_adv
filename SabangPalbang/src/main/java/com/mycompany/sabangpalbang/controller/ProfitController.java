@@ -140,7 +140,12 @@ public class ProfitController {
 		
 		List<Integer> totalprice3 = new ArrayList<>();
 		List<Integer> totalprice2 = new ArrayList<>();
-		List<Integer> totalprice1 = new ArrayList<>(); //각 월의 총 주문금액들을 담을 List 
+		List<Integer> totalprice1 = new ArrayList<>(); //각 최근 3개의 월의 총 주문금액들을 담을 List 
+		
+		
+		List<Integer> outputThreeMonth = new ArrayList<>();
+		List<Integer> outputTwoMonth = new ArrayList<>();
+		List<Integer> outputOneMonth = new ArrayList<>(); //각 최근 3개의 월을 담을 List 
 		
 		
 		for(int i=0; i<totalmonth.size(); i++) {
@@ -149,22 +154,24 @@ public class ProfitController {
 				
 			}
 			else if((month) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
-				
 				month2.add(totalmonth.get(i));
+				
 				
 			}
 			else if((month-1) == (totalmonth.get(i).getOrder_date().getMonth()+1)) {
 				month1.add(totalmonth.get(i));
+				
 			}
 		}
 		
 		int total = 0;
 		int threemonthtotal = 0;
-		
 		for(int i=0; i<month3.size(); i++) {
 			total += month3.get(i).getOrder_price();
 			threemonthtotal += month3.get(i).getOrder_price();
+			
 		}
+		
 		totalprice3.add(total);
 		total=0;
 		
@@ -227,6 +234,9 @@ public class ProfitController {
 		map.put("depositpaycount", depositpaycount);
 		map.put("phonepaycount", phonepaycount);
 		
+		map.put("outputThreeMonth", month3.get(0).getOrder_date().getMonth()+1+"");
+		map.put("outputTwoMonth", month2.get(0).getOrder_date().getMonth()+1+"");
+		map.put("outputOneMonth", month1.get(0).getOrder_date().getMonth()+1+"");
 		return map;
 		
 	}
