@@ -30,12 +30,7 @@ import com.mycompany.sabangpalbang.service.SabangService;
 public class InquiryController {
 	private static final Logger logger = LoggerFactory.getLogger(PalbangController.class);
 	
-	//이종현
-	private String IMG_URL = "C:/Users/ant94/git/SabangPalbang_upload/images/";
-	//조민상
-	private String IMG_URL_sang = "";
-	//이채정
-	private String IMG_URL_jung = "";
+	private String IMG_URL = "C:/sabangpalbang_advanced/images/";
 	
 	@Autowired
 	private InquiryService inquiryService;
