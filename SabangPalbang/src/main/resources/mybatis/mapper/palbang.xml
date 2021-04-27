@@ -27,6 +27,16 @@
 		)
 		where rownum &lt;= 3
 	</select>
+	<!-- Best1 좋아요 게시물 -->
+	<select id="selectBestPalbang" resultType="palbang">
+		select rownum, palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype 
+		from (
+			select palbang_id, palbang_title, palbang_nickname, palbang_likecount, palbang_viewcount, palbang_date, palbang_imgoname, palbang_imgsname, palbang_imgtype
+			from palbang
+			order by palbang_likecount desc
+		)
+		where rownum &lt;= 1
+	</select>
 	
 	<update id="updatePalbang" parameterType="palbang">
 		update palbang set

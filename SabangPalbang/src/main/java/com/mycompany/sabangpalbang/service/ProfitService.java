@@ -14,6 +14,7 @@ import com.mycompany.sabangpalbang.dao.ProductDao;
 import com.mycompany.sabangpalbang.dao.SabangDao;
 import com.mycompany.sabangpalbang.dto.Member;
 import com.mycompany.sabangpalbang.dto.OrderMain;
+import com.mycompany.sabangpalbang.dto.Palbang;
 import com.mycompany.sabangpalbang.dto.Product;
 import com.mycompany.sabangpalbang.dto.Sabang;
 
@@ -63,11 +64,17 @@ public class ProfitService {
 	public Product getBestProduct() {
 		return productDao.selectBestProduct();
 	}
+	public Palbang getBestPalbang() {
+		return palbangDao.selectBestPalbang();
+	}
 	public Sabang getSabang(int sabang_id) {
 		return sabangDao.selectBySid(sabang_id);
 	}
 	public Product getProduct(int product_id) {
 		return productDao.selectByProduct(product_id);
+	}
+	public Palbang getPalbang(int palbang_id) {
+		return palbangDao.selectByPid(palbang_id);
 	}
 	
 	
@@ -90,5 +97,4 @@ public class ProfitService {
 	public int getPhonePayCount() {
 		return orderMainDao.phonepaycount();
 	}
-
 }

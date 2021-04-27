@@ -36,8 +36,8 @@ import com.mycompany.sabangpalbang.service.SabangService;
 public class OrderController {
 	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 	
-	private String IMG_URL = "C:/sabangpalbang_advanced/images/";
 	
+	private String IMG_URL = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//이종현
 	private String IMG_URL_hyun = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//조민상
