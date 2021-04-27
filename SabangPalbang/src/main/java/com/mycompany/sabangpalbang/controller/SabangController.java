@@ -36,7 +36,7 @@ public class SabangController {
 	private static final Logger logger = LoggerFactory.getLogger(SabangController.class);
 
 	//이종현
-	private String IMG_URL_1 = "C:/Users/ant94/git/SabangPalbang_upload/images/";
+	private String IMG_URL = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//조민상
 	private String IMG_URL_2 = "";
 	//이채정
@@ -115,7 +115,7 @@ public class SabangController {
 			sabang.setSabang_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			sabang.setSabang_imgtype(mf.getContentType());
 			try {
-				File file = new File(IMG_URL_1 + "sabang_post/"
+				File file = new File(IMG_URL + "sabang_post/"
 						+ sabang.getSabang_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {
@@ -147,7 +147,7 @@ public class SabangController {
 			sabang.setSabang_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			sabang.setSabang_imgtype(mf.getContentType());
 			try {
-				File file = new File(IMG_URL_1 + "sabang_post/"
+				File file = new File(IMG_URL + "sabang_post/"
 						+ sabang.getSabang_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {
@@ -169,7 +169,7 @@ public class SabangController {
 				return;
 			sattachoname = new String(sattachoname.getBytes("UTF-8"), "ISO-8859-1");
 			String sattachsname = sabang.getSabang_imgsname();
-			String sattachspath = IMG_URL_1 + "sabang_post/" + sattachsname;
+			String sattachspath = IMG_URL + "sabang_post/" + sattachsname;
 			String sattachtype = sabang.getSabang_imgtype();
 
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + sattachoname + "\";");
@@ -202,7 +202,7 @@ public class SabangController {
 				return;
 			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
 			String pattachsname = product.getProduct_imgsname();
-			String pattachspath = IMG_URL_1 + "sabang_detail/" + pattachsname;
+			String pattachspath = IMG_URL + "sabang_detail/" + pattachsname;
 			String pattachtype = product.getProduct_imgtype();
 
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
@@ -230,7 +230,7 @@ public class SabangController {
 			product.setProduct_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			product.setProduct_imgtype(mf.getContentType());
 			try {
-				File file = new File(IMG_URL_1 + "sabang_detail/"
+				File file = new File(IMG_URL + "sabang_detail/"
 						+ product.getProduct_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {
@@ -260,7 +260,7 @@ public class SabangController {
 			product.setProduct_imgsname(new Date().getTime() + "-" + mf.getOriginalFilename());
 			product.setProduct_imgtype(mf.getContentType());
 			try {
-				File file = new File(IMG_URL_1 + "sabang_detail/"
+				File file = new File(IMG_URL + "sabang_detail/"
 						+ product.getProduct_imgsname());
 				mf.transferTo(file);
 			} catch (Exception e) {

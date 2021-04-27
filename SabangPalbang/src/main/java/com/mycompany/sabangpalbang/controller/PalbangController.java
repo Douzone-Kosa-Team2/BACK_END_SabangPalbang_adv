@@ -31,7 +31,7 @@ public class PalbangController {
 	private static final Logger logger = LoggerFactory.getLogger(PalbangController.class);
 
 	//이종현
-	private String IMG_URL_1 = "C:/Users/ant94/git/SabangPalbang_upload/images/";
+	private String IMG_URL = "C:/Users/ant94/git/SabangPalbang_upload/images/";
 	//조민상
 	private String IMG_URL_2 = "";
 	//이채정
@@ -84,7 +84,7 @@ public class PalbangController {
 				return;
 			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
 			String pattachsname = palbang.getPalbang_imgsname();
-			String pattachspath = IMG_URL_1 + "palbang_post/" + pattachsname;
+			String pattachspath = IMG_URL + "palbang_post/" + pattachsname;
 			String pattachtype = palbang.getPalbang_imgtype();
 
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
@@ -109,7 +109,7 @@ public class PalbangController {
 				return;
 			pattachoname = new String(pattachoname.getBytes("UTF-8"), "ISO-8859-1");
 			String pattachsname = palbang_detail.getPalbang_dimgsname();
-			String pattachspath = IMG_URL_1 + "palbang_detail/" + pattachsname;
+			String pattachspath = IMG_URL + "palbang_detail/" + pattachsname;
 			String pattachtype = palbang_detail.getPalbang_dimgtype();
 
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + pattachoname + "\";");
