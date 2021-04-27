@@ -31,6 +31,13 @@ public class PalbangController {
 	private static final Logger logger = LoggerFactory.getLogger(PalbangController.class);
 
 	private String IMG_URL = "C:/sabangpalbang_advanced/images/";
+	//이종현
+	private String IMG_URL_hyun = "C:/Users/ant94/git/SabangPalbang_upload/images/";
+	//조민상
+	private String IMG_URL_sang = "C:/sabangpalbang_advanced/images/";
+	//이채정
+	private String IMG_URL_jung = "/Users/homecj/Pictures/SabangPalbang_upload/images/";
+	
 	
 	@Autowired
 	private PalbangService palbangService;
