@@ -209,16 +209,10 @@ public class ProfitController {
 		
 		
 		//결제 방법
-		List<Integer> cardpaycount = new ArrayList<>();
+
 		int cardcount = profitService.getCardPaycount();
-		cardpaycount.add(cardcount);
-		List<Integer> depositpaycount = new ArrayList<>();
 		int depositcount = profitService.getDepositPayCount();
-		depositpaycount.add(depositcount);
-		List<Integer> phonepaycount = new ArrayList<>();
 		int phonecount = profitService.getPhonePayCount();
-		phonepaycount.add(phonecount);
-		
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("month3", month3.size());
@@ -230,9 +224,9 @@ public class ProfitController {
 		map.put("totalprice1", totalprice1);
 		map.put("totalCount", totalCount);
 		map.put("threeTotalCount", threeTotalCount);
-		map.put("cardpaycount", cardpaycount);
-		map.put("depositpaycount", depositpaycount);
-		map.put("phonepaycount", phonepaycount);
+		map.put("cardpaycount", cardcount);
+		map.put("depositpaycount", depositcount);
+		map.put("phonepaycount", phonecount);
 		
 		map.put("outputThreeMonth", month3.get(0).getOrder_date().getMonth()+1+"");
 		map.put("outputTwoMonth", month2.get(0).getOrder_date().getMonth()+1+"");
